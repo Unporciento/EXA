@@ -1,243 +1,618 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>IG MEGA-ANALYZER V6</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <style>
-        :root { --bg: #000; --card: #121212; --primary: #00f2ff; --accent: #7000ff; --text: #ffffff; }
-        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
-        header { padding: 25px 15px; background: linear-gradient(to bottom, #1a1a1a, #000); border-bottom: 1px solid #333; text-align: center; position: sticky; top: 0; z-index: 100; }
-        h1 { margin: 0; font-size: 18px; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
-        
-        /* Dropzone & Inputs */
-        .upload-container { padding: 20px; }
-        .dropzone { border: 2px dashed #444; border-radius: 20px; padding: 40px 20px; text-align: center; background: var(--card); position: relative; transition: 0.3s; }
-        .dropzone:active { border-color: var(--primary); background: #1a1a1a; }
-        input[type=file] { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>App de Estudio INACAP PRO</title>
+  <style>
+    /* Variables y Diseño Premium (Modo Claro/Oscuro) */
+    :root {
+      --bg: #f3f4f6;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --text-muted: #6b7280;
+      --primary: #dc2626; /* Rojo INACAP */
+      --primary-hover: #b91c1c;
+      --border: #e5e7eb;
+      --success: #10b981;
+      --success-bg: #d1fae5;
+      --danger: #ef4444;
+      --danger-bg: #fee2e2;
+      --warning: #f59e0b;
+      --nav-bg: #ffffff;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --xp-color: #8b5cf6;
+    }
 
-        /* Dashboard */
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 15px; }
-        .stat-card { background: var(--card); padding: 18px; border-radius: 16px; border: 1px solid #222; position: relative; overflow: hidden; }
-        .stat-card::after { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); }
-        .val { font-size: 32px; font-weight: 900; display: block; margin-bottom: 5px; }
-        .lbl { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+    [data-theme="dark"] {
+      --bg: #111827;
+      --surface: #1f2937;
+      --text: #f9fafb;
+      --text-muted: #9ca3af;
+      --primary: #ef4444;
+      --primary-hover: #f87171;
+      --border: #374151;
+      --nav-bg: #1f2937;
+      --success: #34d399;
+      --success-bg: rgba(16, 185, 129, 0.15);
+      --danger: #f87171;
+      --danger-bg: rgba(239, 68, 68, 0.15);
+      --warning: #fbbf24;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    }
 
-        /* Tabs & Lists */
-        .tabs { display: flex; gap: 10px; padding: 10px 15px; overflow-x: auto; background: #000; position: sticky; top: 75px; z-index: 90; }
-        .tab { padding: 10px 20px; background: #1a1a1a; border-radius: 25px; font-size: 12px; white-space: nowrap; border: 1px solid #333; cursor: pointer; }
-        .tab.active { background: var(--primary); color: #000; font-weight: bold; border-color: var(--primary); }
+    * { box-sizing: border-box; transition: background-color 0.2s, color 0.2s; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding-bottom: 70px;
+      overflow-x: hidden;
+    }
 
-        .list-view { display: none; padding: 15px; }
-        .user-row { padding: 14px; background: #0a0a0a; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #1a1a1a; }
-        .tag { font-size: 9px; padding: 3px 8px; border-radius: 5px; font-weight: bold; text-transform: uppercase; }
+    /* Top Bar con Sistema de XP */
+    .top-bar {
+      background: var(--nav-bg);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .xp-badge {
+      background: var(--xp-color);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 2px 4px rgba(139, 92, 246, 0.3);
+    }
 
-        /* Progress Bar */
-        #progress-container { display: none; padding: 0 20px 20px; }
-        .progress-bg { background: #222; height: 6px; border-radius: 3px; overflow: hidden; }
-        .progress-fill { background: var(--primary); height: 100%; width: 0%; transition: 0.1s; box-shadow: 0 0 10px var(--primary); }
-        #status-msg { font-size: 10px; color: #888; margin-top: 8px; text-align: center; font-family: monospace; }
-        
-        canvas { max-height: 220px; margin-top: 15px; }
-    </style>
+    .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
+    h1, h2, h3 { margin-top: 0; }
+    .sub { color: var(--text-muted); font-size: 14px; margin-bottom: 20px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+    
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:active { transform: scale(0.98); }
+    
+    .badge {
+      align-self: flex-start;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+      font-weight: bold;
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn {
+      width: 100%; border: none; border-radius: 12px; padding: 14px; cursor: pointer;
+      font-weight: bold; font-size: 15px; margin-bottom: 10px;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    
+    /* Quiz */
+    .question-box { background: var(--surface); padding: 20px; border-radius: 16px; margin-bottom: 15px; border: 1px solid var(--border); }
+    .option {
+      width: 100%; text-align: left; padding: 16px; margin-bottom: 10px;
+      border-radius: 12px; border: 2px solid var(--border);
+      background: var(--surface); color: var(--text); cursor: pointer; font-size: 15px;
+    }
+    .option.correct { background: var(--success-bg); border-color: var(--success); color: var(--success); }
+    .option.wrong { background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
+    .explanation { background: var(--surface); border-left: 4px solid var(--primary); padding: 15px; border-radius: 0 12px 12px 0; font-size: 14px; }
+
+    /* ProgressBar */
+    .progress-bar-container { width: 100%; height: 8px; background: var(--border); border-radius: 4px; margin-bottom: 15px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s ease; }
+
+    /* Flashcards */
+    .flashcard-container { perspective: 1000px; height: 350px; margin-bottom: 20px; width: 100%; }
+    .flashcard { width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; cursor: pointer; position: relative; }
+    .flashcard.is-flipped { transform: rotateY(180deg); }
+    .flashcard-face {
+      position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 20px; text-align: center; border-radius: 16px;
+      background: var(--surface); border: 2px solid var(--border);
+    }
+    .flashcard-back { transform: rotateY(180deg); border-color: var(--primary); }
+
+    /* Pomodoro */
+    .pomodoro-box { text-align: center; padding: 30px 20px; background: var(--surface); border-radius: 16px; border: 1px solid var(--border); }
+    .time-display { font-size: 60px; font-weight: bold; color: var(--primary); margin: 10px 0; font-variant-numeric: tabular-nums; }
+    
+    textarea { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); min-height: 150px; font-family: inherit; resize: none; }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      position: fixed; bottom: 0; width: 100%; background: var(--nav-bg);
+      display: flex; justify-content: space-around; align-items: center;
+      padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05); border-top: 1px solid var(--border);
+      z-index: 1000;
+    }
+    .bottom-nav button {
+      background: none; border: none; color: var(--text-muted); font-size: 10px;
+      display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; width: 25%;
+    }
+    .bottom-nav button.active-tab { color: var(--primary); font-weight: bold; }
+    .nav-icon { font-size: 20px; }
+
+    .section { display: none; animation: fadeIn 0.3s ease; }
+    .active { display: block; }
+    .hidden { display: none !important; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Confetti CSS */
+    .confetti { position: fixed; width: 10px; height: 10px; background-color: #f2d74e; opacity: 0; z-index: 9999; animation: fall linear forwards; }
+    @keyframes fall {
+      0% { opacity: 1; transform: translateY(-10vh) rotate(0deg); }
+      100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+    }
+  </style>
 </head>
 <body>
 
-<header>
-    <h1>META ANALYZER <span style="font-weight: 300; opacity: 0.6;">V6.0</span></h1>
-</header>
-
-<div id="upload-screen">
-    <div class="upload-container">
-        <div class="dropzone">
-            <div style="font-size: 40px; margin-bottom: 15px;">💾</div>
-            <div style="font-weight: bold;">SELECCIONAR DATA (0.5GB+)</div>
-            <div style="font-size: 11px; color: #666; margin-top: 8px;">Sube el ZIP o selecciona archivos JSON de Drive</div>
-            <input type="file" id="megaInput" multiple accept=".json,.zip">
-        </div>
+  <div class="top-bar">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <strong style="font-size: 18px;">🚜 App INACAP</strong>
+      <button onclick="toggleTheme()" style="background:none; border:none; font-size: 20px; cursor:pointer;">🌗</button>
     </div>
+    <div class="xp-badge" id="xpDisplay">✨ Nivel 1</div>
+  </div>
+
+  <div class="container">
     
-    <div id="progress-container">
-        <div class="progress-bg"><div class="progress-fill" id="p-fill"></div></div>
-        <div id="status-msg">Iniciando motor de análisis...</div>
-    </div>
-</div>
+    <section id="homeSection" class="section active">
+      <h2>Materiales Metálicos</h2>
+      <p class="sub">Elige un módulo para entrenar. ¡Gana XP por cada acierto!</p>
 
-<div id="dashboard" style="display:none">
-    <div class="stats-grid">
-        <div class="stat-card">
-            <span class="lbl">Seguidores</span><span id="res-foll" class="val">0</span>
+      <div class="grid">
+        <div class="card" onclick="startQuiz('week1')">
+          <div class="badge">S1</div>
+          <strong style="font-size: 14px;">Conceptos Básicos</strong>
         </div>
-        <div class="stat-card">
-            <span class="lbl">Siguiendo</span><span id="res-fing" class="val">0</span>
+        <div class="card" onclick="startQuiz('week2')">
+          <div class="badge">S2</div>
+          <strong style="font-size: 14px;">Ferrosos y Normas</strong>
         </div>
-        <div class="stat-card" style="border-color: #ff0055;">
-            <span class="lbl">No te siguen</span><span id="res-tra" class="val" style="color: #ff0055;">0</span>
+        <div class="card" onclick="startQuiz('week3')">
+          <div class="badge">S3</div>
+          <strong style="font-size: 14px;">No Ferrosos</strong>
         </div>
-        <div class="stat-card" style="border-color: #00ff88;">
-            <span class="lbl">Fans</span><span id="res-fans" class="val" style="color: #00ff88;">0</span>
+        <div class="card" onclick="startQuiz('week4')">
+          <div class="badge">S4</div>
+          <strong style="font-size: 14px;">Procesos y Hornos</strong>
         </div>
-    </div>
+      </div>
 
-    <div class="tabs">
-        <div class="tab active" onclick="nav('overview')">Gráficos</div>
-        <div class="tab" onclick="nav('traitors')">Traidores ❌</div>
-        <div class="tab" onclick="nav('fans')">Fans (Tú no sigues)</div>
-        <div class="tab" onclick="nav('ranking')">Top Chats 💬</div>
-    </div>
+      <div class="card" style="border-color: var(--primary); margin-bottom: 15px;" onclick="startQuiz('all')">
+        <div class="badge" style="background: var(--text);">Modo Dios 👑</div>
+        <strong>Simulacro General (40 Preguntas)</strong>
+      </div>
+      
+      <div class="card" style="border-color: var(--warning);" onclick="startQuiz('mistakes')">
+        <div class="badge" style="background: var(--warning); color: black;">Repaso Inteligente 🧠</div>
+        <strong>Preguntas en las que fallaste antes</strong>
+      </div>
+    </section>
 
-    <div id="v-overview" class="list-view" style="display:block">
-        <div class="stat-card" style="width: 100%; border: none; background: #080808;">
-            <span class="lbl">Actividad horaria (24h)</span>
-            <canvas id="timeChart"></canvas>
+    <section id="studyZoneSection" class="section">
+      <h2>Zona de Estudio</h2>
+      <p class="sub">Usa la técnica Pomodoro para no quemarte el cerebro.</p>
+
+      <div class="pomodoro-box" id="pomodoroBox">
+        <strong id="pomoLabel" style="color: var(--text-muted); text-transform: uppercase; font-size: 12px; letter-spacing: 1px;">Modo Enfoque</strong>
+        <div class="time-display" id="timeDisplay">25:00</div>
+        <div style="display: flex; gap: 10px; margin-top: 15px;">
+          <button class="btn btn-primary" id="btnPomoAction" onclick="toggleTimer()">Iniciar</button>
+          <button class="btn btn-outline" onclick="resetTimer()">Reiniciar</button>
         </div>
-    </div>
+      </div>
+    </section>
 
-    <div id="v-traitors" class="list-view"></div>
-    <div id="v-fans" class="list-view"></div>
-    <div id="v-ranking" class="list-view"></div>
-</div>
+    <section id="flashcardsSection" class="section">
+      <h2>Tarjetas de Memoria</h2>
+      <p class="sub">Toca la tarjeta para ver la respuesta. Fija el conocimiento.</p>
+      
+      <div class="flashcard-container" onclick="flipCard()">
+        <div class="flashcard" id="fcElement">
+          <div class="flashcard-face">
+            <span class="badge">Pregunta</span>
+            <h3 id="fcFront" style="margin-top: 15px;"></h3>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <span class="badge" style="background: var(--warning); color: black;">Respuesta</span>
+            <p id="fcBack" style="font-size: 16px; margin-top: 15px;"></p>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <button class="btn btn-outline" style="width: 45%;" onclick="prevFc()">Anterior</button>
+        <span id="fcCount" style="font-weight: bold; font-size: 14px;"></span>
+        <button class="btn btn-primary" style="width: 45%;" onclick="nextFc()">Siguiente</button>
+      </div>
+    </section>
 
-<script>
-// CONFIGURACIÓN DE ESTADO GLOBAL
-const DATA = {
-    followers: new Set(),
-    following: new Set(),
-    chats: {},
-    hourly: Array(24).fill(0),
-    filesTotal: 0,
-    filesDone: 0
-};
+    <section id="notesSection" class="section">
+      <h2>Mis Apuntes</h2>
+      <p class="sub">Guarda aquí tus fórmulas o torpedo. Se autoguarda.</p>
+      <textarea id="myNotes" placeholder="Escribe aquí tu resumen de la Norma SAE..."></textarea>
+    </section>
 
-const UI = {
-    input: document.getElementById('megaInput'),
-    pBar: document.getElementById('p-fill'),
-    pCont: document.getElementById('progress-container'),
-    msg: document.getElementById('status-msg'),
-    dash: document.getElementById('dashboard'),
-    upScreen: document.getElementById('upload-screen')
-};
+    <section id="quizSection" class="section">
+      <div class="progress-bar-container"><div class="progress-bar-fill" id="quizProgressBar"></div></div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 14px; font-weight: bold;">
+        <span id="quizProgressText">1/10</span>
+        <span style="color: var(--success);">Aciertos: <span id="scoreText">0</span></span>
+      </div>
 
-UI.input.addEventListener('change', async (e) => {
-    const files = Array.from(e.target.files);
-    if (!files.length) return;
+      <div class="question-box">
+        <h3 id="questionText" style="margin: 0; line-height: 1.4;"></h3>
+      </div>
 
-    UI.pCont.style.display = 'block';
-    DATA.filesTotal = files.length;
+      <div id="optionsArea"></div>
 
-    // MOTOR DE PROCESAMIENTO
-    for (const file of files) {
-        UI.msg.innerText = `Analizando: ${file.name}`;
-        
-        if (file.name.endsWith('.zip')) {
-            try {
-                const zip = await JSZip.loadAsync(file);
-                const entries = Object.keys(zip.files).filter(n => n.endsWith('.json'));
-                DATA.filesTotal += entries.length;
-                
-                for (const path of entries) {
-                    const txt = await zip.file(path).async("string");
-                    process(JSON.parse(txt), path);
-                    updateProgress();
-                }
-            } catch (err) { console.error("Error ZIP:", err); }
-        } else if (file.name.endsWith('.json')) {
-            const txt = await file.text();
-            process(JSON.parse(txt), file.name);
-            updateProgress();
-        }
-    }
+      <div id="openArea" class="hidden">
+        <textarea id="openInput" placeholder="Escribe tu respuesta aquí..."></textarea>
+        <button class="btn btn-primary" id="btnShowAnswer" onclick="revealOpenAnswer()">Ver Respuesta Real</button>
+        <div id="evalArea" class="hidden">
+          <div class="explanation"><strong>Respuesta Correcta:</strong><br><span id="modelAnswerText"></span></div>
+          <p style="text-align: center; margin-top: 15px; font-weight: bold;">¿Estuviste cerca?</p>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn" style="background: var(--danger); color: white;" onclick="gradeOpen(false)">Fallé</button>
+            <button class="btn" style="background: var(--success); color: white;" onclick="gradeOpen(true)">Acerté</button>
+          </div>
+        </div>
+      </div>
 
-    renderUI();
-});
+      <div id="explanationArea" class="explanation hidden" style="margin-bottom: 15px;"></div>
+      <button class="btn btn-primary hidden" id="btnNext" onclick="nextQuestion()">Siguiente Pregunta →</button>
+    </section>
 
-function process(json, fileName) {
-    const name = fileName.toLowerCase();
-    
-    // MEJORA CHATGPT: Extracción profunda de nombres (string_list_data)
-    const harvest = (obj, targetSet) => {
-        if (!obj || typeof obj !== 'object') return;
-        if (obj.string_list_data) {
-            obj.string_list_data.forEach(item => {
-                if (item.value) targetSet.add(decodeURIComponent(escape(item.value)));
-            });
-        }
-        Object.values(obj).forEach(v => harvest(v, targetSet));
+    <section id="resultsSection" class="section text-center">
+      <div class="card" style="text-align: center; padding: 40px 20px;">
+        <div id="resEmoji" style="font-size: 60px; margin-bottom: 10px;">🏆</div>
+        <h1 id="resScore" style="font-size: 48px; color: var(--primary); margin: 0;">100%</h1>
+        <p class="sub" id="resMsg" style="font-size: 16px; margin-top: 5px;">¡Excelente!</p>
+        <div class="xp-badge" style="display: inline-flex; margin-top: 10px;" id="resXP"></div>
+        <button class="btn btn-primary" style="margin-top: 20px;" onclick="switchTab('homeSection')">Terminar</button>
+      </div>
+    </section>
+
+  </div>
+
+  <nav class="bottom-nav" id="bottomNav">
+    <button onclick="switchTab('homeSection')" id="tab-homeSection" class="active-tab">
+      <span class="nav-icon">📝</span><span>Test</span>
+    </button>
+    <button onclick="switchTab('flashcardsSection')" id="tab-flashcardsSection">
+      <span class="nav-icon">📇</span><span>Tarjetas</span>
+    </button>
+    <button onclick="switchTab('studyZoneSection')" id="tab-studyZoneSection">
+      <span class="nav-icon">⏱️</span><span>Estudio</span>
+    </button>
+    <button onclick="switchTab('notesSection')" id="tab-notesSection">
+      <span class="nav-icon">📒</span><span>Apuntes</span>
+    </button>
+  </nav>
+
+  <script>
+    // --- 40 PREGUNTAS (10 x SEMANA) ---
+    const db = {
+      week1: [
+        { type: "mcq", question: "¿Cuál es el porcentaje de carbono presente en los aceros?", options: ["0,002 a 2,11 %", "2,11 a 6,67 %", "Más de 6,67 %", "0 %"], correct: "0,002 a 2,11 %", explanation: "El acero tiene desde 0,002 a 2,11 %." },
+        { type: "mcq", question: "¿Qué característica de maquinabilidad tienen las fundiciones?", options: ["Imposibles de maquinar", "Son más fáciles de maquinar que los aceros", "Requieren hornos muy costosos", "Son sumamente maleables"], correct: "Son más fáciles de maquinar que los aceros", explanation: "Es una de sus principales ventajas industriales." },
+        { type: "mcq", question: "¿Qué metal constituye alrededor del 8% de la corteza terrestre?", options: ["Magnesio", "Cobre", "Aluminio", "Titanio"], correct: "Aluminio", explanation: "Es el metal más abundante y el segundo más usado." },
+        { type: "mcq", question: "¿Qué propiedad biológica destaca en el cobre?", options: ["Metal de transición", "Antimicrobiano", "Altamente magnético", "Se oxida fácil"], correct: "Antimicrobiano", explanation: "Impide el crecimiento de bacterias." },
+        { type: "mcq", question: "¿Qué aleación resulta de combinar cobre con zinc?", options: ["Bronce", "Acero", "Latón", "Duraluminio"], correct: "Latón", explanation: "Cobre + Zinc = Latón." },
+        { type: "mcq", question: "¿Por qué se debe evitar la humedad en los moldes para magnesio?", options: ["Se oxida", "El magnesio descompone fácilmente al agua hirviente", "Pierde magnetismo", "Pesa más"], correct: "El magnesio descompone fácilmente al agua hirviente", explanation: "Sufre ataque electrolítico con la humedad." },
+        { type: "open", question: "Diferencia entre materiales ferrosos y no ferrosos.", sampleAnswer: "Los ferrosos poseen carbono en su estructura; los no ferrosos carecen de carbono.", explanation: "Es la base de la clasificación química de los metales." },
+        { type: "open", question: "Nombra tres ventajas de las fundiciones de hierro.", sampleAnswer: "1. Fáciles de maquinar. 2. Absorben vibraciones. 3. Resistentes al choque térmico.", explanation: "Son vitales para bloques de motor o bases de maquinaria." },
+        { type: "open", question: "¿Qué característica electrónica tienen los metales de transición como el titanio?", sampleAnswer: "Incluyen el orbital 'd' parcialmente lleno de electrones.", explanation: "Por esto están en el centro de la tabla periódica." },
+        { type: "open", question: "¿Con qué se alea el magnesio y para qué?", sampleAnswer: "Con aluminio, zinc y manganeso. Para aumentar dureza y resistencia a la corrosión.", explanation: "Puro es muy ligero pero débil." }
+      ],
+      week2: [
+        { type: "mcq", question: "En Norma SAE, ¿qué indican los dos primeros números?", options: ["Porcentaje de carbono", "La familia de la aleación (sin carbono)", "Año de fabricación", "Dureza"], correct: "La familia de la aleación (sin carbono)", explanation: "El prefijo o primeros dígitos designan el grupo." },
+        { type: "mcq", question: "¿Qué letra usa UNS para aceros inoxidables?", options: ["G", "A", "C", "S"], correct: "S", explanation: "S de Stainless (Inoxidable)." },
+        { type: "mcq", question: "¿Qué define la 'Tenacidad'?", options: ["Resistencia a penetración", "Capacidad de deformarse", "Absorber energía de deformación en grandes cantidades", "No deformarse"], correct: "Absorber energía de deformación en grandes cantidades", explanation: "Es vital para resistir impactos sin romperse." },
+        { type: "mcq", question: "¿Qué elemento mejora dureza al combinarse con Níquel?", options: ["Cromo", "Silicio", "Azufre", "Fósforo"], correct: "Cromo", explanation: "Forman una dupla perfecta para resistencia." },
+        { type: "mcq", question: "¿Cuánto Cromo mínimo necesita un acero para ser 'inoxidable'?", options: ["5%", "8%", "12%", "20%"], correct: "12%", explanation: "Con 12% o más se forma la capa anticorrosión." },
+        { type: "mcq", question: "Ventaja principal del hierro fundido gris:", options: ["Fácil de soldar", "Costo muy bajo y fácil de maquinar", "Resistencia a tensión", "Sin grafito"], correct: "Costo muy bajo y fácil de maquinar", explanation: "Es la fundición más usada en el mundo." },
+        { type: "open", question: "Explica la designación SAE 1020.", sampleAnswer: "10 = Acero al carbono simple. 20 = 0.20% de carbono aproximado.", explanation: "Lectura básica de catálogos de metales." },
+        { type: "open", question: "Nombra 3 tipos de aceros inoxidables.", sampleAnswer: "Ferríticos, Austeníticos, Martensíticos.", explanation: "Se clasifican por su estructura interna." },
+        { type: "open", question: "¿El hierro nodular obedece la ley de Hooke?", sampleAnswer: "No, su módulo de elasticidad disminuye constantemente con el esfuerzo.", explanation: "Aunque tiene mejor módulo que el hierro gris." },
+        { type: "open", question: "¿Cómo se obtiene el hierro maleable?", sampleAnswer: "Recociendo térmicamente el hierro fundido blanco.", explanation: "Convierte el carbono rígido en nódulos de grafito." }
+      ],
+      week3: [
+        { type: "mcq", question: "Densidad del aluminio vs acero:", options: ["El doble", "Un tercio del acero", "Igual", "Un cuarto"], correct: "Un tercio del acero", explanation: "Aluminio: 2770 kg/m3. Acero: 7750 kg/m3." },
+        { type: "mcq", question: "¿Debilidad del Magnesio al calentarse a 100°C?", options: ["Se funde", "Pierde su límite de fluencia notablemente", "Se vuelve duro", "Se hace magnético"], correct: "Pierde su límite de fluencia notablemente", explanation: "Pierde fuerza estructural muy rápido con la temperatura." },
+        { type: "mcq", question: "Punto de fusión del Wolframio (Tungsteno):", options: ["660 °C", "1215 °C", "2770 °C", "3370 °C"], correct: "3370 °C", explanation: "El más alto de todos los metales conocidos." },
+        { type: "mcq", question: "¿Qué significa el prefijo A en aluminio (ej: A9)?", options: ["Carbono", "Procesamiento (A=Forjado, A0=Fundido)", "Térmico", "Pureza"], correct: "Procesamiento (A=Forjado, A0=Fundido)", explanation: "Ayuda a saber cómo fue fabricado." },
+        { type: "mcq", question: "Bronce usado en resortes por su resistencia a fatiga:", options: ["Al zinc", "Al fósforo", "Al aluminio", "Al silicio"], correct: "Al fósforo", explanation: "El fósforo le da propiedades elásticas únicas." },
+        { type: "mcq", question: "¿Qué es el anodizado?", options: ["Volverlo magnético", "Producir película de óxido pesada electrolíticamente", "Soldar", "Enfriar"], correct: "Producir película de óxido pesada electrolíticamente", explanation: "Protege al aluminio de la corrosión." },
+        { type: "open", question: "Desventajas del Titanio.", sampleAnswer: "Alto costo y extrema dificultad para maquinarlo.", explanation: "Es increíble mecánicamente pero caro y complejo de usar." },
+        { type: "open", question: "Aplicación estrella del Wolframio.", sampleAnswer: "Aceros rápidos, metales duros de corte y filamentos.", explanation: "Por su tolerancia al calor extremo." },
+        { type: "open", question: "¿Qué aleación va bien para radiadores y por qué?", sampleAnswer: "Latón rojo (15% Zn). Soporta corrosión y agua caliente.", explanation: "Es altamente maleable en tubos." },
+        { type: "open", question: "¿Qué es el envejecimiento térmico del aluminio?", sampleAnswer: "Calentar para disolver aleantes y templar rápido para dar dureza extrema.", explanation: "Así el aluminio logra resistencias casi como el acero." }
+      ],
+      week4: [
+        { type: "mcq", question: "¿Por qué inyectar oxígeno al arrabio líquido?", options: ["Para enfriar", "Oxidar elementos no deseados (azufre, fósforo)", "Aumentar carbono", "Hacerlo pesado"], correct: "Oxidar elementos no deseados (azufre, fósforo)", explanation: "Las impurezas se queman o vuelven escoria." },
+        { type: "mcq", question: "¿Qué es el carbón de Coque?", options: ["Acero inox", "Gas inerte", "Carbón mineral destilado sin aire (95% carbono)", "Ladrillo"], correct: "Carbón mineral destilado sin aire (95% carbono)", explanation: "El combustible clave de los altos hornos." },
+        { type: "mcq", question: "Proceso histórico de 1856 hoy obsoleto:", options: ["BOF", "Arco eléctrico", "Convertidor Bessemer", "Siemens-Martin"], correct: "Convertidor Bessemer", explanation: "Revolucionó el mundo pero hoy hay métodos mejores." },
+        { type: "mcq", question: "¿Qué horno lento permite análisis químico súper preciso?", options: ["Siemens-Martin", "BOF", "Bessemer", "Cubilote"], correct: "Siemens-Martin", explanation: "Tarda 5 horas, da tiempo a ajustar la receta." },
+        { type: "mcq", question: "Horno ideal para aceros muy aleados (Ni, Cr, Mo):", options: ["Siemens-Martin", "Arco Eléctrico", "Bessemer", "BOF"], correct: "Arco Eléctrico", explanation: "Funde chatarra con electricidad, evitando que los aleantes valiosos se oxiden." },
+        { type: "mcq", question: "¿Cuánto tarda el Horno Básico al Oxígeno (BOF)?", options: ["5 horas", "2 horas", "20 minutos", "1 minuto"], correct: "20 minutos", explanation: "Inyecta oxígeno supersónico, es ultra rápido." },
+        { type: "open", question: "4 etapas de la fundición de cobre.", sampleAnswer: "Secado, fusión, conversión, refinación/limpieza de escorias.", explanation: "Proceso continuo y exotérmico." },
+        { type: "open", question: "¿Cómo inyecta oxígeno el horno BOF?", sampleAnswer: "Por una lanza refrigerada por agua a velocidad supersónica.", explanation: "Genera reacciones químicas violentas que limpian el acero." },
+        { type: "open", question: "Ventaja del Siemens-Martin sobre Bessemer en 1870.", sampleAnswer: "Permitía usar mucha chatarra fría (hasta 50%).", explanation: "Era mucho más económico logísticamente." },
+        { type: "open", question: "Base química de fundir cobre.", sampleAnswer: "Transformar minerales sulfurados usando reacciones exotérmicas.", explanation: "El mismo proceso genera su calor." }
+      ]
     };
 
-    if (name.includes('follower')) harvest(json, DATA.followers);
-    if (name.includes('following')) harvest(json, DATA.following);
+    // --- VARIABLES Y SISTEMA DE XP ---
+    let mistakes = JSON.parse(localStorage.getItem('inacap_mistakes')) || [];
+    let userXP = parseInt(localStorage.getItem('inacap_xp')) || 0;
+    let currentBank = [], currIdx = 0, score = 0, earnedSessionXP = 0;
 
-    // MEJORA GEMINI: Mensajes y Actividad
-    if (json.messages && Array.isArray(json.messages)) {
-        json.messages.forEach(m => {
-            if (m.sender_name) {
-                const user = decodeURIComponent(escape(m.sender_name));
-                DATA.chats[user] = (DATA.chats[user] || 0) + 1;
-                if (m.timestamp_ms) {
-                    const h = new Date(m.timestamp_ms).getHours();
-                    DATA.hourly[h]++;
-                }
-            }
-        });
+    function renderXP() {
+      let lvl = Math.floor(userXP / 100) + 1;
+      document.getElementById('xpDisplay').innerHTML = `🌟 Nivel ${lvl} | ${userXP} XP`;
     }
-}
+    renderXP();
 
-function updateProgress() {
-    DATA.filesDone++;
-    const perc = (DATA.filesDone / DATA.filesTotal) * 100;
-    UI.pBar.style.width = `${perc}%`;
-}
+    function addXP(points) {
+      userXP += points;
+      earnedSessionXP += points;
+      localStorage.setItem('inacap_xp', userXP);
+      renderXP();
+    }
 
-function renderUI() {
-    const traitors = [...DATA.following].filter(x => !DATA.followers.has(x));
-    const fans = [...DATA.followers].filter(x => !DATA.following.has(x));
+    // --- HAPTIC FEEDBACK (Vibración celular) ---
+    function vibrate(ms) {
+      try { if(navigator.vibrate) navigator.vibrate(ms); } catch(e) {}
+    }
 
-    document.getElementById('res-foll').innerText = DATA.followers.size;
-    document.getElementById('res-fing').innerText = DATA.following.size;
-    document.getElementById('res-tra').innerText = traitors.length;
-    document.getElementById('res-fans').innerText = fans.length;
+    // --- MANEJO DE TABS ---
+    function switchTab(tabId) {
+      vibrate(20);
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      document.querySelectorAll('.bottom-nav button').forEach(b => b.classList.remove('active-tab'));
+      document.getElementById('tab-' + tabId).classList.add('active-tab');
+      if(tabId === 'flashcardsSection') loadFlashcards();
+    }
 
-    // RENDERIZADO DE LISTAS
-    document.getElementById('v-traitors').innerHTML = traitors.map(u => 
-        `<div class="user-row"><span>${u}</span><span class="tag" style="background:#ff00551a; color:#ff0055;">No sigue</span></div>`).join('');
-    
-    document.getElementById('v-fans').innerHTML = fans.map(u => 
-        `<div class="user-row"><span>${u}</span><span class="tag" style="background:#00ff881a; color:#00ff88;">Fan</span></div>`).join('');
+    // --- TEMA (Dark mode default en HTML, aquí el toggle) ---
+    function toggleTheme() {
+      vibrate(20);
+      let current = document.documentElement.getAttribute('data-theme');
+      let target = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', target);
+      localStorage.setItem('inacap_theme', target);
+    }
 
-    const chats = Object.entries(DATA.chats).sort((a,b) => b[1] - a[1]);
-    document.getElementById('v-ranking').innerHTML = chats.map(([n, c]) => 
-        `<div class="user-row"><span>${n}</span><b style="color:var(--primary)">${c} msgs</b></div>`).join('');
+    window.onload = () => {
+      let savedTheme = localStorage.getItem('inacap_theme');
+      if(savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('myNotes').value = localStorage.getItem('inacap_notes') || "";
+      document.getElementById('myNotes').addEventListener('input', e => localStorage.setItem('inacap_notes', e.target.value));
+    };
 
-    // CHART
-    new Chart(document.getElementById('timeChart'), {
-        type: 'line',
-        data: {
-            labels: [...Array(24).keys()].map(h => h+'h'),
-            datasets: [{ 
-                label: 'Interacción', 
-                data: DATA.hourly, 
-                borderColor: '#00f2ff', 
-                tension: 0.4, 
-                fill: true,
-                backgroundColor: 'rgba(0, 242, 255, 0.05)'
-            }]
-        },
-        options: { plugins: { legend: false }, scales: { y: { display: false }, x: { grid: { color: '#222' } } } }
-    });
+    // --- LÓGICA DEL QUIZ ---
+    function startQuiz(mode) {
+      vibrate(30);
+      if(mode === 'all') currentBank = [...db.week1, ...db.week2, ...db.week3, ...db.week4];
+      else if (mode === 'mistakes') {
+        if(mistakes.length === 0) return alert("¡No tienes errores guardados! 🏆");
+        currentBank = [...mistakes];
+      } else currentBank = [...db[mode]];
 
-    UI.upScreen.style.display = 'none';
-    UI.dash.style.display = 'block';
-}
+      currentBank = currentBank.sort(() => Math.random() - 0.5);
+      currIdx = 0; score = 0; earnedSessionXP = 0;
+      
+      document.getElementById('bottomNav').classList.add('hidden');
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById('quizSection').classList.add('active');
+      loadQuestion();
+    }
 
-function nav(id) {
-    document.querySelectorAll('.list-view').forEach(v => v.style.display = 'none');
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('v-' + id).style.display = 'block';
-    event.currentTarget.classList.add('active');
-}
-</script>
+    function loadQuestion() {
+      let q = currentBank[currIdx];
+      document.getElementById('quizProgressText').innerText = `${currIdx + 1}/${currentBank.length}`;
+      document.getElementById('quizProgressBar').style.width = `${((currIdx) / currentBank.length) * 100}%`;
+      document.getElementById('scoreText').innerText = score;
+      document.getElementById('questionText').innerText = q.question;
+      document.getElementById('btnNext').classList.add('hidden');
+      document.getElementById('explanationArea').classList.add('hidden');
+
+      if(q.type === 'mcq') {
+        document.getElementById('openArea').classList.add('hidden');
+        const optArea = document.getElementById('optionsArea');
+        optArea.innerHTML = ""; optArea.classList.remove('hidden');
+        let mixedOpts = [...q.options].sort(() => Math.random() - 0.5);
+        mixedOpts.forEach(opt => {
+          let btn = document.createElement('button');
+          btn.className = 'option'; btn.innerText = opt;
+          btn.onclick = () => evalMcq(btn, opt, q.correct, q.explanation, q);
+          optArea.appendChild(btn);
+        });
+      } else {
+        document.getElementById('optionsArea').classList.add('hidden');
+        document.getElementById('openArea').classList.remove('hidden');
+        document.getElementById('openInput').value = "";
+        document.getElementById('btnShowAnswer').classList.remove('hidden');
+        document.getElementById('evalArea').classList.add('hidden');
+        document.getElementById('modelAnswerText').innerText = q.sampleAnswer;
+      }
+    }
+
+    function evalMcq(btnObj, selected, correct, exp, qObj) {
+      let btns = document.querySelectorAll('.option');
+      btns.forEach(b => {
+        b.disabled = true;
+        if(b.innerText === correct) b.classList.add('correct');
+        if(b.innerText === selected && selected !== correct) b.classList.add('wrong');
+      });
+
+      if(selected === correct) {
+        vibrate(50); score++; addXP(10);
+        mistakes = mistakes.filter(m => m.question !== qObj.question);
+      } else {
+        vibrate([50, 50, 50]); // Vibra triple si hay error
+        if(!mistakes.find(m => m.question === qObj.question)) mistakes.push(qObj);
+      }
+      localStorage.setItem('inacap_mistakes', JSON.stringify(mistakes));
+      showFeedback(exp);
+    }
+
+    function revealOpenAnswer() {
+      vibrate(20);
+      document.getElementById('btnShowAnswer').classList.add('hidden');
+      document.getElementById('evalArea').classList.remove('hidden');
+    }
+
+    function gradeOpen(isCorrect) {
+      let qObj = currentBank[currIdx];
+      if(isCorrect) {
+        vibrate(50); score++; addXP(10);
+        mistakes = mistakes.filter(m => m.question !== qObj.question);
+      } else {
+        vibrate([50, 50, 50]);
+        if(!mistakes.find(m => m.question === qObj.question)) mistakes.push(qObj);
+      }
+      localStorage.setItem('inacap_mistakes', JSON.stringify(mistakes));
+      document.getElementById('evalArea').classList.add('hidden');
+      showFeedback(qObj.explanation);
+    }
+
+    function showFeedback(text) {
+      document.getElementById('scoreText').innerText = score;
+      document.getElementById('quizProgressBar').style.width = `${((currIdx + 1) / currentBank.length) * 100}%`;
+      let expArea = document.getElementById('explanationArea');
+      expArea.innerHTML = `<strong>Dato clave:</strong> ${text}`;
+      expArea.classList.remove('hidden');
+      document.getElementById('btnNext').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      vibrate(20);
+      currIdx++;
+      if(currIdx < currentBank.length) loadQuestion();
+      else showResults();
+    }
+
+    function showResults() {
+      vibrate(100);
+      document.getElementById('quizSection').classList.remove('active');
+      document.getElementById('resultsSection').classList.add('active');
+      document.getElementById('bottomNav').classList.remove('hidden');
+      
+      let pct = Math.round((score / currentBank.length) * 100);
+      document.getElementById('resScore').innerText = pct + "%";
+      document.getElementById('resEmoji').innerText = pct >= 80 ? "🔥" : pct >= 50 ? "👍" : "📚";
+      document.getElementById('resMsg').innerText = `Acertaste ${score} de ${currentBank.length} preguntas.`;
+      document.getElementById('resXP').innerText = `+${earnedSessionXP} XP Ganados`;
+
+      if(pct >= 80) fireConfetti(); // 🎉 ¡CONFETI!
+    }
+
+    function fireConfetti() {
+      const colors = ['#f2d74e', '#95c3de', '#ff9a91', '#8b5cf6'];
+      for (let i = 0; i < 50; i++) {
+        let conf = document.createElement('div');
+        conf.className = 'confetti';
+        conf.style.left = Math.random() * 100 + 'vw';
+        conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        conf.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        conf.style.animationDelay = Math.random() * 1 + 's';
+        document.body.appendChild(conf);
+        setTimeout(() => conf.remove(), 5000);
+      }
+    }
+
+    // --- FLASHCARDS ---
+    let fcBank = [], fcIdx = 0;
+    function loadFlashcards() {
+      fcBank = [...db.week1, ...db.week2, ...db.week3, ...db.week4];
+      fcIdx = 0; renderFc();
+    }
+    function renderFc() {
+      if(!fcBank.length) return;
+      document.getElementById('fcElement').classList.remove('is-flipped');
+      let q = fcBank[fcIdx];
+      document.getElementById('fcFront').innerText = q.question;
+      document.getElementById('fcBack').innerText = q.type === 'mcq' ? q.correct : q.sampleAnswer;
+      document.getElementById('fcCount').innerText = `${fcIdx + 1} / ${fcBank.length}`;
+    }
+    function flipCard() { vibrate(20); document.getElementById('fcElement').classList.toggle('is-flipped'); }
+    function nextFc() { vibrate(20); if(fcIdx < fcBank.length - 1) { fcIdx++; renderFc(); } }
+    function prevFc() { vibrate(20); if(fcIdx > 0) { fcIdx--; renderFc(); } }
+
+    // --- POMODORO ---
+    let pomoTime = 25 * 60, pomoInterval = null, isPomoRunning = false, isWorkMode = true;
+    function updatePomoDisplay() {
+      let m = Math.floor(pomoTime / 60).toString().padStart(2, '0');
+      let s = (pomoTime % 60).toString().padStart(2, '0');
+      document.getElementById('timeDisplay').innerText = `${m}:${s}`;
+    }
+    function toggleTimer() {
+      vibrate(20);
+      let btn = document.getElementById('btnPomoAction');
+      if(isPomoRunning) {
+        clearInterval(pomoInterval); isPomoRunning = false; btn.innerText = "Reanudar";
+      } else {
+        isPomoRunning = true; btn.innerText = "Pausar";
+        pomoInterval = setInterval(() => {
+          if(pomoTime > 0) { pomoTime--; updatePomoDisplay(); }
+          else {
+            clearInterval(pomoInterval); isPomoRunning = false; vibrate([200, 200, 200]);
+            isWorkMode = !isWorkMode;
+            pomoTime = isWorkMode ? 25 * 60 : 5 * 60;
+            document.getElementById('pomoLabel').innerText = isWorkMode ? "Modo Enfoque" : "Modo Descanso (¡Párate!)";
+            document.getElementById('pomoLabel').style.color = isWorkMode ? "var(--text-muted)" : "var(--success)";
+            updatePomoDisplay(); btn.innerText = "Iniciar";
+            alert(isWorkMode ? "¡A estudiar, rey!" : "¡Tiempo! Relájate 5 minutitos.");
+          }
+        }, 1000);
+      }
+    }
+    function resetTimer() {
+      vibrate(20);
+      clearInterval(pomoInterval); isPomoRunning = false; isWorkMode = true;
+      pomoTime = 25 * 60; updatePomoDisplay();
+      document.getElementById('btnPomoAction').innerText = "Iniciar";
+      document.getElementById('pomoLabel').innerText = "Modo Enfoque";
+      document.getElementById('pomoLabel').style.color = "var(--text-muted)";
+    }
+  </script>
 </body>
 </html>
