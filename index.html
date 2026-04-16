@@ -1,323 +1,129 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>App INACAP - Materiales (Prueba Mixta)</title>
-  <style>
-    :root {
-      --bg: #f3f4f6; --surface: #ffffff; --text: #1f2937; --text-muted: #6b7280;
-      --primary: #dc2626; --border: #e5e7eb;
-      --success: #10b981; --success-bg: #d1fae5; --danger: #ef4444; --danger-bg: #fee2e2;
-      --warning: #f59e0b; --nav-bg: #ffffff; --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      --xp-color: #f59e0b; /* Amarillo/Naranja para Materiales */
-    }
-    [data-theme="dark"] {
-      --bg: #111827; --surface: #1f2937; --text: #f9fafb; --text-muted: #9ca3af;
-      --primary: #ef4444; --border: #374151;
-      --nav-bg: #1f2937; --success: #34d399; --success-bg: rgba(16, 185, 129, 0.15);
-      --danger: #f87171; --danger-bg: rgba(239, 68, 68, 0.15); --warning: #fbbf24;
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
-    }
-    * { box-sizing: border-box; transition: background-color 0.2s, color 0.2s; -webkit-tap-highlight-color: transparent; }
-    body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); padding-bottom: 70px; overflow-x: hidden; }
-    .top-bar { background: var(--nav-bg); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
-    .xp-badge { background: var(--xp-color); color: black; padding: 4px 12px; border-radius: 999px; font-weight: bold; font-size: 13px; display: flex; align-items: center; gap: 5px; }
-    .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
-    h1, h2, h3 { margin-top: 0; }
-    .sub { color: var(--text-muted); font-size: 14px; margin-bottom: 20px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; cursor: pointer; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: center; position: relative; }
-    .card:active { transform: scale(0.98); }
-    .badge { align-self: flex-start; font-size: 11px; padding: 4px 10px; border-radius: 999px; margin-bottom: 8px; font-weight: bold; background: var(--xp-color); color: black; }
-    .btn { width: 100%; border: none; border-radius: 12px; padding: 14px; cursor: pointer; font-weight: bold; font-size: 15px; margin-bottom: 10px; }
-    .btn-primary { background: var(--xp-color); color: black; }
-    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
-    .question-box { background: var(--surface); padding: 20px; border-radius: 16px; margin-bottom: 15px; border: 1px solid var(--border); }
-    .option { width: 100%; text-align: left; padding: 16px; margin-bottom: 10px; border-radius: 12px; border: 2px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; font-size: 15px; }
-    .option.correct { background: var(--success-bg); border-color: var(--success); color: var(--success); }
-    .option.wrong { background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
-    .explanation { background: var(--surface); border-left: 4px solid var(--xp-color); padding: 15px; border-radius: 0 12px 12px 0; font-size: 14px; line-height: 1.6; white-space: pre-wrap; }
-    .progress-bar-container { width: 100%; height: 8px; background: var(--border); border-radius: 4px; margin-bottom: 15px; overflow: hidden; }
-    .progress-bar-fill { height: 100%; background: var(--xp-color); width: 0%; transition: width 0.3s ease; }
-    .bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--nav-bg); display: flex; justify-content: space-around; align-items: center; padding: 10px 0 calc(10px + env(safe-area-inset-bottom)); box-shadow: 0 -2px 10px rgba(0,0,0,0.05); border-top: 1px solid var(--border); z-index: 1000; }
-    .bottom-nav button { background: none; border: none; color: var(--text-muted); font-size: 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; width: 25%; }
-    .bottom-nav button.active-tab { color: var(--xp-color); font-weight: bold; }
-    .nav-icon { font-size: 20px; }
-    .section { display: none; animation: fadeIn 0.3s ease; }
-    .active { display: block; }
-    .hidden { display: none !important; }
-    textarea { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); min-height: 120px; font-family: monospace; font-size: 15px; resize: vertical; margin-bottom: 15px;}
-    .tipo-badge { font-size: 10px; padding: 3px 8px; border-radius: 4px; float: right; font-weight: bold; background: var(--primary); color: white; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apuntes de Evaluación Matemática</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+            color: #cc0000;
+            border-bottom: 2px solid #cc0000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #cc0000;
+        }
+        .card h2 {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #cc0000;
+            background-color: #fce8e8;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            font-size: 0.95em;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+        .note strong {
+            color: #856404;
+        }
+    </style>
 </head>
 <body>
-  <div class="top-bar">
-    <div style="display: flex; align-items: center; gap: 10px;">
-      <strong style="font-size: 18px;">⚙️ App Materiales</strong>
-      <button type="button" onclick="toggleTheme()" style="background:none; border:none; font-size: 20px; cursor:pointer;">🌗</button>
+
+    <h1>Resumen de Evaluación</h1>
+
+    <div class="card">
+        <h2>1. Parámetros para la continuidad de una función</h2>
+        <ul>
+            <li><b>Contexto:</b> Función f(x) dividida en tres tramos.</li>
+            <li><b>Valor de a:</b> <span class="highlight">5</span></li>
+            <li><b>Valor de b:</b> <span class="highlight">10</span></li>
+            <li><b>Límite cuando x → a:</b> <span class="highlight">11</span></li>
+            <li><b>Límite cuando x → b:</b> <span class="highlight">11</span></li>
+        </ul>
     </div>
-    <div class="xp-badge" id="xpDisplay">✨ Nivel 1</div>
-  </div>
 
-  <div class="container">
-    <section id="homeSection" class="section active">
-      <h2>Modo Prueba Mixta</h2>
-      <p class="sub">El sistema alternará entre preguntas de Selección Múltiple y preguntas de Desarrollo Escrito (Aleaciones, Normas, etc.).</p>
+    <div class="card">
+        <h2>2. Límites de funciones por tramos</h2>
+        <ul>
+            <li><b>Contexto:</b> Función evaluada en el límite cuando x → 4.</li>
+            <li><b>Valor de K:</b> <span class="highlight">-1</span></li>
+            <li><b>Valor del límite:</b> <span class="highlight">9</span></li>
+        </ul>
+    </div>
 
-      <div class="grid">
-        <div class="card" onclick="startQuiz('week1')"><div class="badge">Semana 1</div><strong>Conceptos Básicos</strong></div>
-        <div class="card" onclick="startQuiz('week2')"><div class="badge">Semana 2</div><strong>Ferrosos y Aleaciones</strong></div>
-        <div class="card" onclick="startQuiz('week3')"><div class="badge">Semana 3</div><strong>No Ferrosos</strong></div>
-        <div class="card" onclick="startQuiz('week4')"><div class="badge">Semana 4</div><strong>Hornos y Procesos</strong></div>
-      </div>
-      <div class="card" style="border-color: var(--xp-color); margin-bottom: 15px;" onclick="startQuiz('all')">
-        <div class="badge" style="background: var(--text); color:white;">Modo Dios 👑</div><strong>Simulacro General Mixto (Recomendado)</strong>
-      </div>
-      <div class="card" style="border-color: var(--danger);" onclick="startQuiz('mistakes')">
-        <div class="badge" style="background: var(--danger); color: white;">Repaso Inteligente 🧠</div><strong>Preguntas en las que fallaste</strong>
-      </div>
-    </section>
+    <div class="card">
+        <h2>3. Límites mediante tabla de valores</h2>
+        <ul>
+            <li><b>Contexto:</b> Función fraccionaria con x².</li>
+            <li><b>Cálculo de f(-6):</b> <span class="highlight">Indeterminado</span> (Da como resultado 0/0).</li>
+            <li><b>Límite según la tabla:</b> <span class="highlight">2.5</span> (Por izquierda y derecha tiende al mismo valor).</li>
+        </ul>
+    </div>
 
-    <section id="quizSection" class="section">
-      <div class="progress-bar-container"><div class="progress-bar-fill" id="quizProgressBar"></div></div>
-      <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 14px; font-weight: bold;">
-        <span id="quizProgressText">1/10</span>
-        <span id="qTypeBadge" class="tipo-badge">TIPO</span>
-      </div>
+    <div class="card">
+        <h2>4. Límite al infinito por tabla</h2>
+        <ul>
+            <li><b>Contexto:</b> Evaluación de la función con valores de x creciendo hasta 100,000.</li>
+            <li><b>Valor del límite:</b> <span class="highlight">7</span> (El valor de f(x) se estabiliza en 7.00054).</li>
+        </ul>
+    </div>
 
-      <div class="question-box">
-        <h3 id="questionText" style="margin: 0; line-height: 1.4;"></h3>
-      </div>
+    <div class="card">
+        <h2>5. Ahorro Mensual (Modelo Logístico)</h2>
+        <ul>
+            <li><b>Parámetros calculados:</b> 
+                p = <span class="highlight">30833.55723</span> | 
+                q = <span class="highlight">0.29802</span> | 
+                r = <span class="highlight">0.11871</span>
+            </li>
+            <li><b>b) Ahorro en Enero 2024 (x=1):</b> <span class="highlight">24380.86466</span> pesos.</li>
+            
+            <div class="note">
+                <strong>c) ¿Cuánto ahorrará en total desde Enero hasta Noviembre? (Las dos interpretaciones):</strong><br><br>
+                <b>Opción A (Lo que anotaste):</b> <span class="highlight">28529.69106</span> pesos. Este es el resultado de evaluar la fórmula en x=11. Representa <i>solamente</i> lo que depositó el mes de Noviembre.<br><br>
+                <b>Opción B (Suma acumulada):</b> Si la pregunta pide el "Ahorro Total Acumulado" en la cuenta, se debe sumar lo que ahorró en el mes 1 + el mes 2 + el mes 3... hasta el mes 11. 
+            </div>
 
-      <div id="optionsArea" class="hidden"></div>
+            <li style="margin-top: 15px;"><b>d) Máximo ahorro mensual posible:</b> <span class="highlight">30833.55723</span> pesos. (Corresponde al parámetro "p", que es el límite máximo del modelo logístico).</li>
+        </ul>
+    </div>
 
-      <div id="openArea" class="hidden">
-        <textarea id="openInput" placeholder="Anota tu respuesta aquí..."></textarea>
-        <button type="button" class="btn btn-primary" id="btnShowAnswer" onclick="revealOpenAnswer()">Ver Respuesta Real</button>
-        
-        <div id="evalArea" class="hidden">
-          <div class="explanation">
-            <strong style="color: var(--success); font-size: 16px;">✓ Respuesta Esperada:</strong><br><br>
-            <span id="modelAnswerText" style="font-weight:bold;"></span><br><br>
-            <span id="modelExplanationText" style="font-style:italic;"></span>
-          </div>
-          <p style="text-align: center; margin-top: 20px; font-weight: bold;">¿Estuviste cerca de la respuesta?</p>
-          <div style="display: flex; gap: 10px;">
-            <button type="button" class="btn" style="background: var(--danger); color: white;" onclick="gradeOpen(false)">Fallé ❌</button>
-            <button type="button" class="btn" style="background: var(--success); color: white;" onclick="gradeOpen(true)">Acerté ✅</button>
-          </div>
-        </div>
-      </div>
-
-      <div id="explanationAreaMcq" class="explanation hidden" style="margin-bottom: 15px;"></div>
-      <button type="button" class="btn btn-primary hidden" id="btnNext" onclick="nextQuestion()" style="margin-top: 15px;">Siguiente Pregunta →</button>
-    </section>
-
-    <section id="resultsSection" class="section text-center">
-      <div class="card" style="text-align: center; padding: 40px 20px;">
-        <div id="resEmoji" style="font-size: 60px; margin-bottom: 10px;">🏆</div>
-        <h1 id="resScore" style="font-size: 48px; color: var(--xp-color); margin: 0;">100%</h1>
-        <p class="sub" id="resMsg" style="font-size: 16px; margin-top: 5px;">¡Excelente!</p>
-        <button type="button" class="btn btn-primary" style="margin-top: 20px;" onclick="switchTab('homeSection')">Terminar y volver</button>
-      </div>
-    </section>
-  </div>
-
-  <nav class="bottom-nav" id="bottomNav">
-    <button type="button" onclick="switchTab('homeSection')" id="tab-homeSection" class="active-tab"><span class="nav-icon">📝</span><span>Test</span></button>
-  </nav>
-
-  <script>
-    // ==========================================
-    // BASE DE DATOS MIXTA: MATERIALES METÁLICOS
-    // ==========================================
-    const db = {
-      week1: [
-        { type: "mcq", question: "¿Cuál es el porcentaje de carbono presente en los aceros?", options: ["0,002 a 2,11 %", "2,11 a 6,67 %", "Más de 6,67 %", "0 %"], correct: "0,002 a 2,11 %", explanation: "El acero tiene desde 0,002 a 2,11 %." },
-        { type: "open", question: "Diferencia química principal entre materiales ferrosos y no ferrosos.", sampleAnswer: "Los materiales ferrosos poseen carbono en su estructura (hierros, aceros y fundiciones); los no ferrosos carecen de carbono.", explanation: "Es la base de la clasificación química de los metales." },
-        { type: "mcq", question: "¿Qué característica de maquinabilidad tienen las fundiciones frente a los aceros?", options: ["Son imposibles de maquinar", "Son más fáciles de maquinar que los aceros", "Requieren hornos muy costosos", "Son sumamente maleables"], correct: "Son más fáciles de maquinar que los aceros", explanation: "Es una de sus principales ventajas industriales, además de absorber vibraciones." },
-        { type: "open", question: "Nombra tres ventajas importantes de las fundiciones de hierro en la industria.", sampleAnswer: "1. Son fáciles de maquinar. 2. Absorben vibraciones mecánicas. 3. Son resistentes al desgaste y actúan como autolubricantes.", explanation: "Son vitales para bloques de motor o bases de maquinaria pesada." },
-        { type: "mcq", question: "¿Qué aleación resulta de combinar cobre con zinc?", options: ["Bronce", "Acero", "Latón", "Duraluminio"], correct: "Latón", explanation: "Cobre + Zinc = Latón. (Cobre + Estaño = Bronce)." }
-      ],
-      week2: [
-        { type: "mcq", question: "¿Qué elemento de aleación se debe añadir al acero para formar carburos muy duros y aumentar drásticamente su dureza y tenacidad?", options: ["Cromo", "Silicio", "Azufre", "Fósforo"], correct: "Cromo", explanation: "El Cromo refina el grano y forma carburos duros. Se usa mucho junto al Níquel." },
-        { type: "open", question: "¿Para qué sirve añadir Níquel a una aleación de acero?", sampleAnswer: "Incrementa la resistencia del acero SIN disminuir su ductilidad.", explanation: "El Níquel es clave para piezas que necesitan soportar cargas sin volverse frágiles." },
-        { type: "mcq", question: "En la Norma SAE, ¿qué indican los dos últimos números de un acero como el SAE 1020?", options: ["20% de Manganeso", "0.20% de Carbono aproximado", "Año de fabricación", "Dureza en Rockwell"], correct: "0.20% de Carbono aproximado", explanation: "Los últimos dígitos indican las centésimas de porcentaje de carbono." },
-        { type: "open", question: "¿Cuánto Cromo mínimo debe tener una aleación base hierro para ser considerada 'Acero Inoxidable'?", sampleAnswer: "Debe contener al menos un 12% de Cromo.", explanation: "Este porcentaje forma la película pasiva que evita la oxidación." },
-        { type: "mcq", question: "¿Qué define la propiedad mecánica conocida como 'Tenacidad'?", options: ["Resistencia a la penetración", "Capacidad de deformarse plásticamente sin romperse", "Capacidad de absorber energía de deformación en grandes cantidades antes de romperse", "Incapacidad de deformarse"], correct: "Capacidad de absorber energía de deformación en grandes cantidades antes de romperse", explanation: "Un material tenaz aguanta impactos fuertes." }
-      ],
-      week3: [
-        { type: "mcq", question: "¿Qué sucede con el Magnesio cuando la temperatura se eleva hasta el punto de ebullición del agua (100°C)?", options: ["Se funde completamente", "El punto de fluencia se reduce de manera notable (pierde resistencia)", "Aumenta su dureza", "Se vuelve magnético"], correct: "El punto de fluencia se reduce de manera notable (pierde resistencia)", explanation: "El magnesio es muy ligero, pero su gran debilidad es la temperatura." },
-        { type: "open", question: "Menciona las principales ventajas y desventajas del Titanio en la industria.", sampleAnswer: "Ventajas: Resistencia similar al acero pero pesando la mitad. \nDesventajas: Alto costo y gran dificultad para maquinarlo.", explanation: "Es un metal premium usado en componentes aeroespaciales." },
-        { type: "mcq", question: "¿Qué metal posee el punto de fusión más alto de todos los metales conocidos (3370 °C)?", options: ["Titanio", "Hierro", "Wolframio (Tungsteno)", "Latón"], correct: "Wolframio (Tungsteno)", explanation: "Se usa para filamentos y herramientas de corte rápido por su tolerancia extrema al calor." },
-        { type: "open", question: "¿Qué elementos se añaden comúnmente al Cobre para formar Bronces especiales (ej. para resortes o engranajes)?", sampleAnswer: "Se le añade Estaño, Fósforo (para resortes), Silicio o Aluminio/Berilio (para alta resistencia a fatiga).", explanation: "A diferencia del latón (que usa zinc), los bronces usan estos otros elementos." }
-      ],
-      week4: [
-        { type: "mcq", question: "¿Cuál es el propósito principal de inyectar oxígeno a velocidad supersónica en los hornos de acero (como el BOF)?", options: ["Enfriar rápidamente el metal", "Producir la oxidación de los elementos no deseados (azufre, fósforo) para purificar el acero", "Aumentar el porcentaje de carbono", "Convertirlo en arrabio"], correct: "Producir la oxidación de los elementos no deseados (azufre, fósforo) para purificar el acero", explanation: "El oxígeno quema las impurezas y las convierte en escoria." },
-        { type: "open", question: "¿Por qué se utiliza el Horno de Arco Eléctrico para fabricar aceros fuertemente aleados (con Níquel, Cromo, Molibdeno) en vez de usar el horno BOF?", sampleAnswer: "Porque el Horno de Arco Eléctrico usa calentamiento externo, lo que evita que los elementos de aleación se oxiden y se pierdan, a diferencia del ambiente altamente oxidante del BOF.", explanation: "Permite un control químico perfecto para aceros especiales." },
-        { type: "mcq", question: "¿Cuáles son las 4 etapas ininterrumpidas de la fundición de concentrados de cobre?", options: ["Triturado, Lavado, Secado, Empaquetado", "Secado, Fusión, Conversión, Refinación (y limpieza de escorias)", "Oxidación, Templado, Revenido, Recocido", "Galvanizado, Anodizado, Soplado, Enfriado"], correct: "Secado, Fusión, Conversión, Refinación (y limpieza de escorias)", explanation: "Es un proceso continuo que aprovecha las reacciones exotérmicas." },
-        { type: "open", question: "¿Qué es el carbón Coque y para qué sirve en la metalurgia?", sampleAnswer: "Es un combustible sólido (90-95% carbono) obtenido por la destilación del carbón mineral sin contacto con el aire. Se usa en los altos hornos para la elaboración de hierro.", explanation: "Aporta el calor y el carbono necesario para reducir el mineral de hierro." }
-      ]
-    };
-
-    let mistakes = JSON.parse(localStorage.getItem('materiales_mix_mistakes')) || [];
-    let userXP = parseInt(localStorage.getItem('materiales_mix_xp')) || 0;
-    let currentBank = [], currIdx = 0, score = 0, earnedSessionXP = 0;
-
-    function renderXP() {
-      let lvl = Math.floor(userXP / 100) + 1;
-      document.getElementById('xpDisplay').innerHTML = `⚙️ Nivel ${lvl} | ${userXP} XP`;
-    }
-    renderXP();
-
-    function switchTab(tabId) {
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-      let tabBtn = document.getElementById('tab-' + tabId);
-      if (tabBtn) {
-        document.querySelectorAll('.bottom-nav button').forEach(b => b.classList.remove('active-tab'));
-        tabBtn.classList.add('active-tab');
-      }
-    }
-
-    function toggleTheme() {
-      let current = document.documentElement.getAttribute('data-theme');
-      let target = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', target);
-    }
-
-    function startQuiz(week) {
-      currentBank = [];
-      if (week === 'all') {
-        ['week1', 'week2', 'week3', 'week4'].forEach(w => currentBank = currentBank.concat(db[w]));
-      } else if (week === 'mistakes') {
-        if(mistakes.length === 0) return alert("¡Sin errores registrados! 🏆");
-        currentBank = [...mistakes];
-      } else {
-        currentBank = [...db[week]];
-      }
-
-      if(currentBank.length === 0) return;
-      currentBank.sort(() => Math.random() - 0.5); // Barajar siempre
-      
-      currIdx = 0; score = 0; earnedSessionXP = 0;
-      document.getElementById('bottomNav').classList.add('hidden');
-      switchTab('quizSection');
-      loadQuestion();
-    }
-
-    function loadQuestion() {
-      let q = currentBank[currIdx];
-      document.getElementById('quizProgressText').innerText = `Pregunta ${currIdx + 1} de ${currentBank.length}`;
-      document.getElementById('quizProgressBar').style.width = `${((currIdx) / currentBank.length) * 100}%`;
-      
-      let badge = document.getElementById('qTypeBadge');
-      badge.innerText = q.type === 'mcq' ? "SELECCIÓN MÚLTIPLE" : "DESARROLLO ESCRITO";
-      badge.style.background = q.type === 'mcq' ? "var(--primary)" : "var(--warning)";
-      badge.style.color = q.type === 'mcq' ? "white" : "black";
-
-      document.getElementById('questionText').innerText = q.question;
-      document.getElementById('btnNext').classList.add('hidden');
-      document.getElementById('explanationAreaMcq').classList.add('hidden');
-
-      const optArea = document.getElementById('optionsArea');
-      const openArea = document.getElementById('openArea');
-
-      if(q.type === 'mcq') {
-        openArea.classList.add('hidden');
-        optArea.classList.remove('hidden');
-        optArea.innerHTML = "";
-        
-        let mixedOpts = [...q.options].sort(() => Math.random() - 0.5);
-        mixedOpts.forEach(opt => {
-          let btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'option'; btn.innerText = opt;
-          btn.onclick = () => evalMcq(btn, opt, q.correct, q.explanation, q);
-          optArea.appendChild(btn);
-        });
-      } else {
-        optArea.classList.add('hidden');
-        openArea.classList.remove('hidden');
-        let openInput = document.getElementById('openInput');
-        if(openInput) openInput.value = "";
-        
-        document.getElementById('btnShowAnswer').classList.remove('hidden');
-        document.getElementById('evalArea').classList.add('hidden');
-        document.getElementById('modelAnswerText').innerText = q.sampleAnswer;
-        document.getElementById('modelExplanationText').innerText = q.explanation;
-      }
-    }
-
-    // Evaluación para Selección Múltiple
-    function evalMcq(btnObj, selected, correct, exp, qObj) {
-      let btns = document.querySelectorAll('.option');
-      btns.forEach(b => {
-        b.disabled = true;
-        if(b.innerText === correct) b.classList.add('correct');
-        if(b.innerText === selected && selected !== correct) b.classList.add('wrong');
-      });
-
-      if(selected === correct) { 
-        score++; userXP += 10; earnedSessionXP += 10;
-        mistakes = mistakes.filter(m => m.question !== qObj.question);
-      } else {
-        if(!mistakes.find(m => m.question === qObj.question)) mistakes.push(qObj);
-      }
-      localStorage.setItem('materiales_mix_mistakes', JSON.stringify(mistakes));
-      localStorage.setItem('materiales_mix_xp', userXP);
-      renderXP();
-      
-      let expArea = document.getElementById('explanationAreaMcq');
-      expArea.innerHTML = `<strong>Dato clave:</strong> ${exp}`;
-      expArea.classList.remove('hidden');
-      document.getElementById('quizProgressBar').style.width = `${((currIdx + 1) / currentBank.length) * 100}%`;
-      document.getElementById('btnNext').classList.remove('hidden');
-    }
-
-    // Revelar respuesta para Desarrollo
-    function revealOpenAnswer() {
-      let openInput = document.getElementById('openInput');
-      if(openInput && openInput.value.trim() === "") {
-        if(!confirm("Aún no has escrito nada. ¿Seguro que quieres ver la respuesta?")) return;
-      }
-      document.getElementById('btnShowAnswer').classList.add('hidden');
-      document.getElementById('evalArea').classList.remove('hidden');
-    }
-
-    // Evaluación para Desarrollo
-    function gradeOpen(isCorrect) {
-      let qObj = currentBank[currIdx];
-      if(isCorrect) {
-        score++; userXP += 15; earnedSessionXP += 15; // Desarrollo da más XP
-        mistakes = mistakes.filter(m => m.question !== qObj.question);
-      } else {
-        if(!mistakes.find(m => m.question === qObj.question)) mistakes.push(qObj);
-      }
-      localStorage.setItem('materiales_mix_mistakes', JSON.stringify(mistakes));
-      localStorage.setItem('materiales_mix_xp', userXP);
-      renderXP();
-      
-      document.getElementById('evalArea').classList.add('hidden');
-      document.getElementById('quizProgressBar').style.width = `${((currIdx + 1) / currentBank.length) * 100}%`;
-      document.getElementById('btnNext').classList.remove('hidden');
-    }
-
-    function nextQuestion() {
-      currIdx++;
-      if(currIdx < currentBank.length) loadQuestion();
-      else showResults();
-    }
-
-    function showResults() {
-      switchTab('resultsSection');
-      document.getElementById('bottomNav').classList.remove('hidden');
-      let pct = Math.round((score / currentBank.length) * 100);
-      document.getElementById('resScore').innerText = pct + "%";
-      document.getElementById('resEmoji').innerText = pct >= 80 ? "🔥" : pct >= 50 ? "👍" : "💀";
-      document.getElementById('resMsg').innerText = `Puntaje: ${score} correctas de ${currentBank.length}.\nGanaste +${earnedSessionXP} XP.`;
-    }
-  </script>
 </body>
 </html>
