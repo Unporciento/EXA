@@ -3,143 +3,369 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Respuestas Evaluación Matemática</title>
+    <title>Materiales en Maquinaria Pesada - LHD</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #121212;
-            color: #b3b3b3;
-            line-height: 1.6;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-        .container {
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .card {
-            background-color: #1e1e24;
-            border-radius: 8px;
-            padding: 20px;
-            border-left: 5px solid;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-        /* Colores de las tarjetas */
-        .card.blue { border-left-color: #3b82f6; }
-        .card.purple { border-left-color: #a855f7; }
-        .card.coral { border-left-color: #ef4444; }
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Rajdhani:wght@500;700&display=swap');
 
-        .card h2 {
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-        .card.blue h2 { color: #60a5fa; }
-        .card.purple h2 { color: #c084fc; }
-        .card.coral h2 { color: #f87171; }
-
-        .formula {
-            background-color: #0d0d12;
-            color: #fca5a5;
-            font-family: monospace;
-            padding: 10px;
-            border-radius: 6px;
-            text-align: center;
-            margin-bottom: 15px;
-            font-size: 0.95rem;
+        :root {
+            --bg-base: #0a0a0c;
+            --surface: rgba(25, 28, 35, 0.85);
+            --surface-light: rgba(45, 50, 60, 0.9);
+            --primary: #fca311; /* Amarillo Caterpillar/Minería */
+            --primary-glow: rgba(252, 163, 17, 0.3);
+            --secondary: #e5e5e5;
+            --text-muted: #9ca3af;
+            --danger: #ef233c;
+            
+            --font-main: 'Montserrat', sans-serif;
+            --font-tech: 'Rajdhani', sans-serif;
         }
 
-        p {
-            margin: 5px 0;
-            font-size: 0.95rem;
-            color: #9ca3af;
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background-color: var(--bg-base); color: var(--secondary);
+            font-family: var(--font-main); overflow: hidden;
         }
 
-        .answer {
-            color: #4ade80;
-            font-weight: bold;
-            font-size: 1.05rem;
+        /* Fondo de malla técnica */
+        .bg-grid {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
         }
 
-        .sub-note {
-            font-size: 0.8rem;
-            color: #6b7280;
-            margin-top: 2px;
-            margin-bottom: 10px;
-            line-height: 1.3;
+        #app-container {
+            width: 100vw; height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            position: relative; z-index: 1;
         }
 
-        .section-divider {
-            border-top: 1px solid #374151;
-            margin: 15px 0;
+        .slide {
+            width: 1920px; height: 1080px;
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(var(--scale-factor, 1));
+            opacity: 0; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none; padding: 70px 90px; box-sizing: border-box;
+            display: flex; flex-direction: column;
         }
+
+        .slide.active { opacity: 1; pointer-events: all; z-index: 10; }
+
+        h1 { font-size: 75px; font-weight: 900; text-transform: uppercase; color: #fff; margin: 0 0 15px 0; letter-spacing: 2px; text-shadow: 0 0 30px rgba(0,0,0,0.8); }
+        h1 span { color: var(--primary); }
+        h2 { font-size: 50px; font-weight: 800; margin: 0 0 40px 0; border-left: 8px solid var(--primary); padding-left: 20px; text-transform: uppercase; letter-spacing: 1px;}
+        h3 { font-size: 32px; color: var(--primary); font-family: var(--font-tech); margin: 0 0 15px 0; font-weight: 700; text-transform: uppercase;}
+        p, li { font-size: 22px; line-height: 1.6; color: var(--text-muted); margin-bottom: 15px;}
+        strong { color: #fff; font-weight: 600; }
+
+        /* Paneles Glassmorphism */
+        .panel {
+            background: var(--surface);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            position: relative; overflow: hidden;
+        }
+        .panel::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--primary);
+        }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; height: 100%; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; height: 100%; }
+
+        /* Contenedores de Video/Imagen */
+        .media-box {
+            width: 100%; height: 100%; border-radius: 12px; overflow: hidden;
+            position: relative; border: 1px solid rgba(255,255,255,0.15);
+            background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .media-box video, .media-box img { width: 100%; height: 100%; object-fit: cover; }
+        .media-label {
+            position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.8);
+            color: var(--primary); padding: 8px 15px; border-radius: 6px;
+            font-family: var(--font-tech); font-weight: bold; font-size: 20px; letter-spacing: 1px;
+            border-left: 3px solid var(--primary);
+        }
+
+        /* Tabla de Esfuerzos */
+        .tech-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .tech-table th { background: rgba(252, 163, 17, 0.15); color: var(--primary); padding: 20px; text-align: left; font-family: var(--font-tech); font-size: 26px; border-bottom: 2px solid var(--primary); }
+        .tech-table td { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--secondary); font-size: 22px; background: rgba(0,0,0,0.2);}
+        .tech-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+        /* Barra de progreso UI */
+        #ui-bar {
+            position: absolute; bottom: 30px; left: 90px; right: 90px;
+            display: flex; justify-content: space-between; align-items: center; z-index: 100;
+        }
+        .progress-bg { flex-grow: 1; height: 4px; background: rgba(255,255,255,0.1); margin: 0 40px; position: relative; }
+        #progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s ease; box-shadow: 0 0 10px var(--primary-glow); }
+        .slide-counter { font-family: var(--font-tech); font-size: 24px; font-weight: 700; color: var(--primary); }
     </style>
 </head>
 <body>
+    <div class="bg-grid"></div>
+    <div id="app-container">
 
-    <div class="container">
-
-        <div class="card blue">
-            <h2>Pregunta 1: Ahorro Mensual</h2>
-            <div class="formula">
-                f(x) = p / (1 + q * e^(-rx))
+        <!-- 1. PORTADA -->
+        <div class="slide active" style="padding: 0;">
+            <div style="position: absolute; width: 100%; height: 100%; z-index: -1; pointer-events: none;">
+                <!-- Video de fondo épico -->
+                <video autoplay loop muted src="2.mp4" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.6;"></video>
+                <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(90deg, rgba(10,10,12,1) 0%, rgba(10,10,12,0.8) 40%, transparent 100%);"></div>
             </div>
-            <p>a) Valores de p, q, r:</p>
-            <p>p = <span class="answer">30833.55723</span></p>
-            <p>q = <span class="answer">0.29802</span></p>
-            <p>r = <span class="answer">0.11871</span></p>
             
-            <p style="margin-top: 10px;">b) Ahorro en Enero del 2024:</p>
-            <p><span class="answer">24380.86466</span> pesos</p>
-
-            <p style="margin-top: 10px;">c) Ahorro total (Enero - Noviembre):</p>
-            <p><span class="answer">28529.69106</span> pesos</p>
-            <div class="sub-note">
-                *Nota: Este valor es evaluando x=11 (ahorro de noviembre). Si piden la suma acumulada de los 11 meses, habría que sumar cada mes.
+            <div style="padding: 100px; display: flex; flex-direction: column; justify-content: center; height: 100%; width: 55%;">
+                <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 30px; background: rgba(255,255,255,0.1); padding: 15px 30px; border-radius: 8px; width: fit-content; backdrop-filter: blur(5px);">
+                    <span style="font-family: var(--font-tech); font-size: 28px; color: #fff; font-weight: bold;">INACAP</span>
+                    <span style="color: var(--primary);">|</span>
+                    <span style="font-family: var(--font-tech); font-size: 24px; color: var(--text-muted);">Área Mecánica</span>
+                </div>
+                
+                <h1>Análisis de <span>Materiales</span> en Maquinaria Pesada</h1>
+                <h3 style="font-size: 38px; color: #fff; margin-bottom: 60px;">Cargador Frontal de Bajo Perfil (LHD)</h3>
+                
+                <div class="panel" style="background: rgba(25, 28, 35, 0.6);">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <p style="margin:0;"><strong>Asignatura:</strong> Materiales en Maquinaria Pesada</p>
+                            <p style="margin:5px 0 0 0;"><strong>Sección:</strong> [Tu Sección Aquí]</p>
+                            <p style="margin:20px 0 0 0;"><strong>Docente:</strong> Gerardo Humberto Garrido Fernández</p>
+                            <p style="margin:5px 0 0 0;"><strong>Fecha de Entrega:</strong> 12/05/2026</p>
+                        </div>
+                        <div>
+                            <p style="margin:0; color: var(--primary); font-weight: bold;">Equipo de Trabajo:</p>
+                            <ul style="list-style: none; padding: 0; margin-top: 10px;">
+                                <li>• Aguirre, Millaray</li>
+                                <li>• Bórquez, Renato</li>
+                                <li>• Mamani, Wiljer</li>
+                                <li>• Olivares, Simón</li>
+                                <li>• Sinisterra, Julio</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <p style="margin-top: 10px;">d) Máximo ahorro posible en un mes:</p>
-            <p><span class="answer">30833.55723</span> pesos</p>
         </div>
 
-        <div class="card purple">
-            <h2>Pregunta 2: Límites por Tabla</h2>
-            <div class="formula">
-                f(x) = (7x² + 54x + 72) / (x² - 36)
+        <!-- 2. INTRODUCCIÓN -->
+        <div class="slide">
+            <h2>Introducción y Contexto</h2>
+            <div class="grid-2">
+                <div class="panel" style="display: flex; flex-direction: column; justify-content: center;">
+                    <h3>El Desafío Estructural</h3>
+                    <p>En la minería subterránea, los equipos operan bajo condiciones extremas de abrasión, humedad e impactos severos contra roca fragmentada. El <strong>Cargador Frontal LHD</strong> es el equipo principal de extracción y acarreo.</p>
+                    <p>El presente informe tiene como objetivo <strong>identificar las propiedades mecánicas y el comportamiento físico</strong> de los distintos metales y polímeros que componen este equipo.</p>
+                    <p>Entender cómo las fuerzas externas (cargas) generan deformaciones es vital para predecir fallas, proponer mejoras en las aleaciones y garantizar la disponibilidad operativa de la máquina.</p>
+                </div>
+                <div class="media-box">
+                    <img src="( 2 ).png" alt="Contexto LHD">
+                    <div class="media-label">Tren de Potencia y Rodado LHD</div>
+                </div>
             </div>
-            <p>a) Calcule f(-6):</p>
-            <p>Elija opción: <span class="answer">Indeterminado</span></p>
-
-            <p style="margin-top: 10px;">b) Límite cuando x → -6 (por tabla):</p>
-            <p>El límite es: <span class="answer">2.5</span></p>
-
-            <p style="margin-top: 10px;">c) Límite cuando x → ∞ (por tabla):</p>
-            <p>El límite es: <span class="answer">7</span></p>
         </div>
 
-        <div class="card coral">
-            <h2>Pregunta 3: Funciones por Tramos</h2>
-            <p>I) Para que el límite en x=4 exista:</p>
-            <p>a) Valor de K: <span class="answer">-1</span></p>
-            <p>b) ¿Cuál es ese límite?: <span class="answer">9</span></p>
+        <!-- 3. IDENTIFICACIÓN DE MATERIALES -->
+        <div class="slide">
+            <h2>1. Propiedades Mecánicas por Componente</h2>
+            <div class="grid-3">
+                <!-- Balde -->
+                <div class="panel" style="padding: 25px;">
+                    <div class="media-box" style="height: 250px; margin-bottom: 20px;">
+                        <video autoplay loop muted src="2.mp4"></video>
+                        <div class="media-label">1. Balde / Cuchara</div>
+                    </div>
+                    <h3>Acero de Alta Resistencia</h3>
+                    <p><strong>Ubicación:</strong> Estructura frontal en contacto con la saca (roca).</p>
+                    <p><strong>Propiedades:</strong> Aleación ferrosa (Ej: Acero al Boro / Hardox). Posee <strong>alta dureza superficial</strong> para resistir el rayado y <strong>gran tenacidad</strong> en el núcleo para absorber golpes sin fracturarse.</p>
+                </div>
+                <!-- Cilindro -->
+                <div class="panel" style="padding: 25px;">
+                    <div class="media-box" style="height: 250px; margin-bottom: 20px;">
+                        <video autoplay loop muted src="1.mp4"></video>
+                        <div class="media-label">2. Vástago de Cilindro</div>
+                    </div>
+                    <h3>Acero al Carbono + Cromo</h3>
+                    <p><strong>Ubicación:</strong> Actuadores hidráulicos de levante y dirección.</p>
+                    <p><strong>Propiedades:</strong> Acero bonificado con recubrimiento de cromo duro. Posee un alto límite de fluencia y una superficie de <strong>baja fricción y extrema dureza</strong> contra el desgaste por roce.</p>
+                </div>
+                <!-- Neumático -->
+                <div class="panel" style="padding: 25px;">
+                    <div class="media-box" style="height: 250px; margin-bottom: 20px;">
+                        <video autoplay loop muted src="3.mp4"></video>
+                        <div class="media-label">3. Neumáticos LHD</div>
+                    </div>
+                    <h3>Elastómero (Caucho)</h3>
+                    <p><strong>Ubicación:</strong> Tren de rodado.</p>
+                    <p><strong>Propiedades:</strong> Material no ferroso (Polímero vulcanizado reforzado con mallas de acero). Destaca por su <strong>alta elasticidad y resiliencia</strong>, capaz de almacenar y liberar energía de deformación continuamente.</p>
+                </div>
+            </div>
+        </div>
 
-            <div class="section-divider"></div>
+        <!-- 4. COMPORTAMIENTO FRENTE A CARGAS -->
+        <div class="slide">
+            <h2>2. Comportamiento frente a Cargas y Esfuerzos</h2>
+            <div class="grid-2">
+                <div class="media-box">
+                    <video autoplay loop muted src="4.mp4"></video>
+                    <div class="media-label">Impacto y Abrasión Extrema</div>
+                </div>
+                <div class="panel" style="display: flex; flex-direction: column; gap: 20px; padding: 30px;">
+                    <div>
+                        <h3 style="font-size: 24px;">Balde (Acero de Alta Resistencia)</h3>
+                        <p style="font-size: 20px;">Al penetrar la pila de material, soporta cargas dinámicas de impacto. El material se comporta elásticamente absorbiendo el golpe, pero sufre <strong>desgaste abrasivo severo</strong> (evidenciado por las chispas) debido a la fricción contra el mineral.</p>
+                    </div>
+                    <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                        <h3 style="font-size: 24px;">Cilindro Hidráulico (Vástago)</h3>
+                        <p style="font-size: 20px;">Sometido a cargas axiales inmensas por la presión del aceite. El acero reacciona generando tensiones internas para no estirarse (tracción) ni curvarse (pandeo) mientras levanta toneladas de roca.</p>
+                    </div>
+                    <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                        <h3 style="font-size: 24px;">Neumático (Elastómero)</h3>
+                        <p style="font-size: 20px;">Bajo el peso de la máquina y la carga (compresión), el caucho cambia su forma física aplastándose contra el suelo (deformación), pero recupera su forma original inmediatamente al girar gracias a su memoria elástica.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <p>II) Parámetros para continuidad:</p>
-            <p>c) Valor de a: <span class="answer">5</span></p>
-            <p>c) Valor de b: <span class="answer">10</span></p>
+        <!-- 5. TABLA COMPARATIVA -->
+        <div class="slide">
+            <h2>3. Diferenciación de Cargas y Deformación</h2>
+            <div class="panel" style="padding: 20px;">
+                <table class="tech-table">
+                    <thead>
+                        <tr>
+                            <th>Componente</th>
+                            <th>Esfuerzo Principal</th>
+                            <th>Concepto de Deformación</th>
+                            <th>Tipo de Deformación Permitida</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. Vástago (Cilindro)</strong></td>
+                            <td>Compresión / Tracción</td>
+                            <td>Fuerza axial que intenta acortar o alargar el eje longitudinal del material. Riesgo de pandeo.</td>
+                            <td><strong>Elástica Mínima.</strong> La deformación plástica (doblamiento permanente) arruina los sellos.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. Balde (Labio/Cuchara)</strong></td>
+                            <td>Flexión / Cizalle</td>
+                            <td>Fuerza perpendicular y de corte al levantar rocas en un extremo mientras está anclado en el otro.</td>
+                            <td><strong>Elástica.</strong> No debe superar su límite de fluencia (Yield Strength) para no descuadrarse.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. Neumáticos</strong></td>
+                            <td>Compresión / Torsión</td>
+                            <td>Aplastamiento por gravedad sumado al torque de giro desde los cubos de rueda en terreno irregular.</td>
+                            <td><strong>Elástica Alta (Reversible).</strong> Diseñado específicamente para deformarse y absorber vibraciones.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-            <p style="margin-top: 10px;">d) Calcule los siguientes límites:</p>
-            <p>i) lim f(x) cuando x → a: <span class="answer">11</span></p>
-            <p>ii) lim f(x) cuando x → b: <span class="answer">11</span></p>
+        <!-- 6. FALLAS Y MEJORAS -->
+        <div class="slide">
+            <h2>4. Análisis de Fallas y Propuesta de Mejora</h2>
+            <div class="grid-2">
+                <div class="panel">
+                    <h3 style="color: var(--danger);">Falla 1: Fisuras por Abrasión (Balde)</h3>
+                    <p>Como se observa en el video de excavación, la fricción constante supera la dureza del acero base, generando desgaste prematuro y adelgazamiento de la plancha, lo que deriva en fisuras por fatiga.</p>
+                    <p style="margin-top: 20px;"><strong>💡 Propuesta de Mejora (Fundamentada):</strong><br>
+                    Agregar material de sacrificio. Soldar <strong>Planchas Bimetálicas (Carburo de Cromo)</strong> en las zonas de mayor roce. El carburo de cromo tiene una dureza extrema (superior a 600 HBW) que resiste la abrasión del cuarzo, protegiendo el acero estructural base.</p>
+                </div>
+                <div class="panel">
+                    <h3 style="color: var(--danger);">Falla 2: Desgarro por Cizalle (Neumático)</h3>
+                    <p>La imagen de detalle muestra cortes y desgarros en los tacos de goma. Al aplicar torque sobre rocas afiladas (cizalle), se supera la resistencia a la tracción del polímero localmente.</p>
+                    <p style="margin-top: 20px;"><strong>💡 Propuesta de Mejora (Fundamentada):</strong><br>
+                    Cambiar a neumáticos de compuesto para <strong>"Minería Subterránea Severa" (L-5S)</strong>, los cuales poseen paredes más gruesas y una formulación de caucho natural vulcanizado con mayor resistencia al corte, o instalar cadenas de protección de acero forjado alrededor del neumático.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. CONCLUSIÓN -->
+        <div class="slide">
+            <h2>Conclusión Técnica</h2>
+            <div class="panel" style="text-align: center; padding: 80px 120px; display: flex; flex-direction: column; justify-content: center; height: 100%; box-sizing: border-box;">
+                <h3 style="font-size: 45px; margin-bottom: 40px; color: #fff;">El material dicta el rendimiento</h3>
+                <p style="font-size: 28px; color: var(--primary); margin-bottom: 30px;">A través de este análisis, concluimos que en maquinaria pesada no existe un material "perfecto" para todo, sino el material adecuado para el esfuerzo específico.</p>
+                <p style="font-size: 24px; text-align: justify;">
+                El acero aleado brinda la resistencia estructural para la carga bruta, el cromo asegura la funcionalidad de precisión hidráulica y los elastómeros absorben la energía dinámica. Comprender las propiedades mecánicas (límite elástico, tenacidad, dureza) nos permite como futuros técnicos diagnosticar la causa raíz de una falla estructural y prescribir aleaciones superiores que eviten tiempos muertos en la mina.
+                </p>
+            </div>
+        </div>
+
+        <!-- UI INFERIOR -->
+        <div id="ui-bar">
+            <span style="font-family: var(--font-tech); color: var(--text-muted); font-size: 20px; text-transform: uppercase; letter-spacing: 2px;">Cargador LHD - Análisis de Materiales</span>
+            <div class="progress-bg">
+                <div id="progress-fill"></div>
+            </div>
+            <div class="slide-counter" id="counter">1 / 7</div>
         </div>
 
     </div>
 
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const progressFill = document.getElementById('progress-fill');
+        const counter = document.getElementById('counter');
+
+        function updateView() {
+            slides.forEach((slide, idx) => {
+                slide.classList.remove('active');
+                if (idx === currentSlide) slide.classList.add('active');
+            });
+            
+            // Actualizar barra y contador
+            progressFill.style.width = `${((currentSlide + 1) / slides.length) * 100}%`;
+            counter.innerText = `${currentSlide + 1} / ${slides.length}`;
+            
+            // Reproducir videos de la slide activa desde cero
+            const activeVideo = slides[currentSlide].querySelector('video');
+            if(activeVideo) {
+                activeVideo.currentTime = 0;
+                activeVideo.play().catch(e => console.log("Autoplay prevent", e));
+            }
+        }
+
+        // Ajuste de escala para pantallas (Mantiene ratio 16:9)
+        function resize() {
+            const ratio = 16 / 9;
+            const winRatio = window.innerWidth / window.innerHeight;
+            let scale = winRatio < ratio ? window.innerWidth / 1920 : window.innerHeight / 1080;
+            document.documentElement.style.setProperty('--scale-factor', scale);
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Controles de teclado
+        document.addEventListener('keydown', (e) => {
+            if (['ArrowRight', ' ', 'PageDown'].includes(e.key) && currentSlide < slides.length - 1) {
+                currentSlide++; updateView();
+            } else if (['ArrowLeft', 'PageUp'].includes(e.key) && currentSlide > 0) {
+                currentSlide--; updateView();
+            } else if (e.key.toLowerCase() === 'f') {
+                if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+                else document.exitFullscreen();
+            }
+        });
+
+        // Controles de click (Mitad derecha avanza, mitad izquierda retrocede)
+        document.addEventListener('click', (e) => {
+            if(e.clientY > window.innerHeight - 80) return; // Ignora clics en la barra inferior
+            if (e.clientX > window.innerWidth / 2 && currentSlide < slides.length - 1) {
+                currentSlide++; updateView();
+            } else if (e.clientX <= window.innerWidth / 2 && currentSlide > 0) {
+                currentSlide--; updateView();
+            }
+        });
+
+        updateView();
+    </script>
 </body>
 </html>
