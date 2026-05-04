@@ -11,7 +11,7 @@
             --bg-base: #0a0a0c;
             --surface: rgba(25, 28, 35, 0.85);
             --surface-light: rgba(45, 50, 60, 0.9);
-            --primary: #fca311; /* Amarillo Caterpillar/Minería */
+            --primary: #fca311; 
             --primary-glow: rgba(252, 163, 17, 0.3);
             --secondary: #e5e5e5;
             --text-muted: #9ca3af;
@@ -27,7 +27,6 @@
             font-family: var(--font-main); overflow: hidden;
         }
 
-        /* Fondo de malla técnica */
         .bg-grid {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
             background-image: 
@@ -60,7 +59,6 @@
         p, li { font-size: 22px; line-height: 1.6; color: var(--text-muted); margin-bottom: 15px;}
         strong { color: #fff; font-weight: 600; }
 
-        /* Paneles Glassmorphism */
         .panel {
             background: var(--surface);
             border: 1px solid rgba(255,255,255,0.1);
@@ -76,7 +74,6 @@
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; height: 100%; }
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; height: 100%; }
 
-        /* Contenedores de Video/Imagen */
         .media-box {
             width: 100%; height: 100%; border-radius: 12px; overflow: hidden;
             position: relative; border: 1px solid rgba(255,255,255,0.15);
@@ -90,13 +87,11 @@
             border-left: 3px solid var(--primary);
         }
 
-        /* Tabla de Esfuerzos */
         .tech-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .tech-table th { background: rgba(252, 163, 17, 0.15); color: var(--primary); padding: 20px; text-align: left; font-family: var(--font-tech); font-size: 26px; border-bottom: 2px solid var(--primary); }
         .tech-table td { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--secondary); font-size: 22px; background: rgba(0,0,0,0.2);}
         .tech-table tr:hover td { background: rgba(255,255,255,0.02); }
 
-        /* Barra de progreso UI */
         #ui-bar {
             position: absolute; bottom: 30px; left: 90px; right: 90px;
             display: flex; justify-content: space-between; align-items: center; z-index: 100;
@@ -113,7 +108,6 @@
         <!-- 1. PORTADA -->
         <div class="slide active" style="padding: 0;">
             <div style="position: absolute; width: 100%; height: 100%; z-index: -1; pointer-events: none;">
-                <!-- Video de fondo épico -->
                 <video autoplay loop muted src="2.mp4" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.6;"></video>
                 <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(90deg, rgba(10,10,12,1) 0%, rgba(10,10,12,0.8) 40%, transparent 100%);"></div>
             </div>
@@ -172,7 +166,6 @@
         <div class="slide">
             <h2>1. Propiedades Mecánicas por Componente</h2>
             <div class="grid-3">
-                <!-- Balde -->
                 <div class="panel" style="padding: 25px;">
                     <div class="media-box" style="height: 250px; margin-bottom: 20px;">
                         <video autoplay loop muted src="2.mp4"></video>
@@ -182,7 +175,6 @@
                     <p><strong>Ubicación:</strong> Estructura frontal en contacto con la saca (roca).</p>
                     <p><strong>Propiedades:</strong> Aleación ferrosa (Ej: Acero al Boro / Hardox). Posee <strong>alta dureza superficial</strong> para resistir el rayado y <strong>gran tenacidad</strong> en el núcleo para absorber golpes sin fracturarse.</p>
                 </div>
-                <!-- Cilindro -->
                 <div class="panel" style="padding: 25px;">
                     <div class="media-box" style="height: 250px; margin-bottom: 20px;">
                         <video autoplay loop muted src="1.mp4"></video>
@@ -192,7 +184,6 @@
                     <p><strong>Ubicación:</strong> Actuadores hidráulicos de levante y dirección.</p>
                     <p><strong>Propiedades:</strong> Acero bonificado con recubrimiento de cromo duro. Posee un alto límite de fluencia y una superficie de <strong>baja fricción y extrema dureza</strong> contra el desgaste por roce.</p>
                 </div>
-                <!-- Neumático -->
                 <div class="panel" style="padding: 25px;">
                     <div class="media-box" style="height: 250px; margin-bottom: 20px;">
                         <video autoplay loop muted src="3.mp4"></video>
@@ -267,21 +258,33 @@
             </div>
         </div>
 
-        <!-- 6. FALLAS Y MEJORAS -->
+        <!-- 6. FALLAS Y MEJORAS (ACTUALIZADO CON IMÁGENES) -->
         <div class="slide">
             <h2>4. Análisis de Fallas y Propuesta de Mejora</h2>
             <div class="grid-2">
-                <div class="panel">
-                    <h3 style="color: var(--danger);">Falla 1: Fisuras por Abrasión (Balde)</h3>
-                    <p>Como se observa en el video de excavación, la fricción constante supera la dureza del acero base, generando desgaste prematuro y adelgazamiento de la plancha, lo que deriva en fisuras por fatiga.</p>
-                    <p style="margin-top: 20px;"><strong>💡 Propuesta de Mejora (Fundamentada):</strong><br>
-                    Agregar material de sacrificio. Soldar <strong>Planchas Bimetálicas (Carburo de Cromo)</strong> en las zonas de mayor roce. El carburo de cromo tiene una dureza extrema (superior a 600 HBW) que resiste la abrasión del cuarzo, protegiendo el acero estructural base.</p>
+                <div class="panel" style="padding: 30px; display: flex; flex-direction: column; gap: 15px;">
+                    <div class="media-box" style="height: 220px; min-height: 220px; border-radius: 8px;">
+                        <img src="fisura_balde.jpg" alt="Fisura en Balde LHD">
+                        <div class="media-label" style="font-size: 16px; bottom: 10px; left: 10px;">Evidencia: Fisura Estructural</div>
+                    </div>
+                    <h3 style="color: var(--danger); margin: 0; font-size: 26px;">Falla 1: Fisuras por Abrasión (Balde)</h3>
+                    <p style="margin: 0; font-size: 20px;">Como se observa en la evidencia, la fricción constante supera la dureza del acero base, generando desgaste prematuro y adelgazamiento de la plancha, lo que deriva en fisuras por fatiga.</p>
+                    <div style="background: rgba(252, 163, 17, 0.1); padding: 15px; border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; margin-top: auto;">
+                        <p style="margin: 0; font-size: 18px;"><strong>💡 Propuesta de Mejora (Fundamentada):</strong><br>
+                        Soldar <strong>Planchas Bimetálicas (Carburo de Cromo)</strong> en las zonas de mayor roce. El carburo de cromo tiene una dureza extrema que resiste la abrasión del cuarzo, protegiendo el acero estructural base.</p>
+                    </div>
                 </div>
-                <div class="panel">
-                    <h3 style="color: var(--danger);">Falla 2: Desgarro por Cizalle (Neumático)</h3>
-                    <p>La imagen de detalle muestra cortes y desgarros en los tacos de goma. Al aplicar torque sobre rocas afiladas (cizalle), se supera la resistencia a la tracción del polímero localmente.</p>
-                    <p style="margin-top: 20px;"><strong>💡 Propuesta de Mejora (Fundamentada):</strong><br>
-                    Cambiar a neumáticos de compuesto para <strong>"Minería Subterránea Severa" (L-5S)</strong>, los cuales poseen paredes más gruesas y una formulación de caucho natural vulcanizado con mayor resistencia al corte, o instalar cadenas de protección de acero forjado alrededor del neumático.</p>
+                <div class="panel" style="padding: 30px; display: flex; flex-direction: column; gap: 15px;">
+                    <div class="media-box" style="height: 220px; min-height: 220px; border-radius: 8px;">
+                        <img src="desgarro_neumatico.jpg" alt="Desgarro en Neumático LHD">
+                        <div class="media-label" style="font-size: 16px; bottom: 10px; left: 10px;">Evidencia: Desgarro por Cizalle</div>
+                    </div>
+                    <h3 style="color: var(--danger); margin: 0; font-size: 26px;">Falla 2: Desgarro por Cizalle (Neumático)</h3>
+                    <p style="margin: 0; font-size: 20px;">El detalle muestra cortes profundos en los tacos de goma. Al aplicar torque severo sobre rocas afiladas, se supera la resistencia a la tracción del polímero localmente, arrancando material.</p>
+                    <div style="background: rgba(252, 163, 17, 0.1); padding: 15px; border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; margin-top: auto;">
+                        <p style="margin: 0; font-size: 18px;"><strong>💡 Propuesta de Mejora (Fundamentada):</strong><br>
+                        Cambiar a neumáticos de compuesto para <strong>"Minería Subterránea Severa" (L-5S)</strong>, los cuales poseen paredes más gruesas, o instalar cadenas de protección de acero forjado alrededor de la banda de rodadura.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -321,11 +324,9 @@
                 if (idx === currentSlide) slide.classList.add('active');
             });
             
-            // Actualizar barra y contador
             progressFill.style.width = `${((currentSlide + 1) / slides.length) * 100}%`;
             counter.innerText = `${currentSlide + 1} / ${slides.length}`;
             
-            // Reproducir videos de la slide activa desde cero
             const activeVideo = slides[currentSlide].querySelector('video');
             if(activeVideo) {
                 activeVideo.currentTime = 0;
@@ -333,7 +334,6 @@
             }
         }
 
-        // Ajuste de escala para pantallas (Mantiene ratio 16:9)
         function resize() {
             const ratio = 16 / 9;
             const winRatio = window.innerWidth / window.innerHeight;
@@ -343,7 +343,6 @@
         window.addEventListener('resize', resize);
         resize();
 
-        // Controles de teclado
         document.addEventListener('keydown', (e) => {
             if (['ArrowRight', ' ', 'PageDown'].includes(e.key) && currentSlide < slides.length - 1) {
                 currentSlide++; updateView();
@@ -355,9 +354,8 @@
             }
         });
 
-        // Controles de click (Mitad derecha avanza, mitad izquierda retrocede)
         document.addEventListener('click', (e) => {
-            if(e.clientY > window.innerHeight - 80) return; // Ignora clics en la barra inferior
+            if(e.clientY > window.innerHeight - 80) return;
             if (e.clientX > window.innerWidth / 2 && currentSlide < slides.length - 1) {
                 currentSlide++; updateView();
             } else if (e.clientX <= window.innerWidth / 2 && currentSlide > 0) {
