@@ -58,6 +58,9 @@
         h3 { font-size: 32px; color: var(--primary); font-family: var(--font-tech); margin: 0 0 15px 0; font-weight: 700; text-transform: uppercase;}
         p, li { font-size: 22px; line-height: 1.6; color: var(--text-muted); margin-bottom: 15px;}
         strong { color: #fff; font-weight: 600; }
+        
+        ul.tech-list { padding-left: 25px; }
+        ul.tech-list li { margin-bottom: 20px; }
 
         .panel {
             background: var(--surface);
@@ -126,7 +129,7 @@
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                         <div>
                             <p style="margin:0;"><strong>Asignatura:</strong> Materiales en Maquinaria Pesada</p>
-                            <p style="margin:5px 0 0 0;"><strong>Sección:</strong> [Tu Sección Aquí]</p>
+                            <p style="margin:5px 0 0 0;"><strong>Sección:</strong> V-O20-N5-P4-C2/V</p>
                             <p style="margin:20px 0 0 0;"><strong>Docente:</strong> Gerardo Humberto Garrido Fernández</p>
                             <p style="margin:5px 0 0 0;"><strong>Fecha de Entrega:</strong> 12/05/2026</p>
                         </div>
@@ -151,9 +154,11 @@
             <div class="grid-2">
                 <div class="panel" style="display: flex; flex-direction: column; justify-content: center;">
                     <h3>El Desafío Estructural</h3>
-                    <p>En la minería subterránea, los equipos operan bajo condiciones extremas de abrasión, humedad e impactos severos contra roca fragmentada. El <strong>Cargador Frontal LHD</strong> es el equipo principal de extracción y acarreo.</p>
-                    <p>El presente informe tiene como objetivo <strong>identificar las propiedades mecánicas y el comportamiento físico</strong> de los distintos metales y polímeros que componen este equipo.</p>
-                    <p>Entender cómo las fuerzas externas (cargas) generan deformaciones es vital para predecir fallas, proponer mejoras en las aleaciones y garantizar la disponibilidad operativa de la máquina.</p>
+                    <ul class="tech-list">
+                        <li><strong>Entorno Operativo:</strong> Operación en minería subterránea bajo abrasión extrema e impactos contra roca fragmentada.</li>
+                        <li><strong>Objetivo del Informe:</strong> Identificar propiedades mecánicas de metales y polímeros que componen el equipo LHD.</li>
+                        <li><strong>Relevancia:</strong> Comprender la relación de "Cargas y Deformaciones" para predecir fallas, seleccionar aleaciones y evitar detenciones.</li>
+                    </ul>
                 </div>
                 <div class="media-box">
                     <img src="( 2 ).png" alt="Contexto LHD">
@@ -172,8 +177,8 @@
                         <div class="media-label">1. Balde / Cuchara</div>
                     </div>
                     <h3>Acero de Alta Resistencia</h3>
-                    <p><strong>Ubicación:</strong> Estructura frontal en contacto con la saca (roca).</p>
-                    <p><strong>Propiedades:</strong> Aleación ferrosa (Ej: Acero al Boro / Hardox). Posee <strong>alta dureza superficial</strong> para resistir el rayado y <strong>gran tenacidad</strong> en el núcleo para absorber golpes sin fracturarse.</p>
+                    <p><strong>Clasificación:</strong> Aleación ferrosa (Ej: Hardox).</p>
+                    <p><strong>Propiedades:</strong> Alta dureza superficial contra el rayado y núcleo tenaz para absorber impactos sin fractura frágil.</p>
                 </div>
                 <div class="panel" style="padding: 25px;">
                     <div class="media-box" style="height: 250px; margin-bottom: 20px;">
@@ -181,8 +186,8 @@
                         <div class="media-label">2. Vástago de Cilindro</div>
                     </div>
                     <h3>Acero al Carbono + Cromo</h3>
-                    <p><strong>Ubicación:</strong> Actuadores hidráulicos de levante y dirección.</p>
-                    <p><strong>Propiedades:</strong> Acero bonificado con recubrimiento de cromo duro. Posee un alto límite de fluencia y una superficie de <strong>baja fricción y extrema dureza</strong> contra el desgaste por roce.</p>
+                    <p><strong>Clasificación:</strong> Acero bonificado con recubrimiento superficial.</p>
+                    <p><strong>Propiedades:</strong> Alto límite de fluencia y superficie de extrema dureza y baja fricción (cromo duro).</p>
                 </div>
                 <div class="panel" style="padding: 25px;">
                     <div class="media-box" style="height: 250px; margin-bottom: 20px;">
@@ -190,32 +195,32 @@
                         <div class="media-label">3. Neumáticos LHD</div>
                     </div>
                     <h3>Elastómero (Caucho)</h3>
-                    <p><strong>Ubicación:</strong> Tren de rodado.</p>
-                    <p><strong>Propiedades:</strong> Material no ferroso (Polímero vulcanizado reforzado con mallas de acero). Destaca por su <strong>alta elasticidad y resiliencia</strong>, capaz de almacenar y liberar energía de deformación continuamente.</p>
+                    <p><strong>Clasificación:</strong> Polímero vulcanizado no ferroso.</p>
+                    <p><strong>Propiedades:</strong> Elevada resiliencia. Almacena energía de deformación y recupera su geometría de forma instantánea.</p>
                 </div>
             </div>
         </div>
 
         <!-- 4. COMPORTAMIENTO FRENTE A CARGAS -->
         <div class="slide">
-            <h2>2. Comportamiento frente a Cargas y Esfuerzos</h2>
+            <h2>2. Comportamiento frente a Esfuerzos</h2>
             <div class="grid-2">
                 <div class="media-box">
                     <video autoplay loop muted src="4.mp4"></video>
-                    <div class="media-label">Impacto y Abrasión Extrema</div>
+                    <div class="media-label">Impacto y Abrasión Dinámica</div>
                 </div>
                 <div class="panel" style="display: flex; flex-direction: column; gap: 20px; padding: 30px;">
                     <div>
                         <h3 style="font-size: 24px;">Balde (Acero de Alta Resistencia)</h3>
-                        <p style="font-size: 20px;">Al penetrar la pila de material, soporta cargas dinámicas de impacto. El material se comporta elásticamente absorbiendo el golpe, pero sufre <strong>desgaste abrasivo severo</strong> (evidenciado por las chispas) debido a la fricción contra el mineral.</p>
+                        <p style="font-size: 20px;">Comportamiento <strong>elástico</strong> ante la penetración. Sufre desgaste abrasivo microscópico constante por fricción de la roca.</p>
                     </div>
                     <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
                         <h3 style="font-size: 24px;">Cilindro Hidráulico (Vástago)</h3>
-                        <p style="font-size: 20px;">Sometido a cargas axiales inmensas por la presión del aceite. El acero reacciona generando tensiones internas para no estirarse (tracción) ni curvarse (pandeo) mientras levanta toneladas de roca.</p>
+                        <p style="font-size: 20px;">Soporta tensión interna para evitar estiramiento (tracción) o curvatura (pandeo) bajo alta presión de trabajo.</p>
                     </div>
                     <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
                         <h3 style="font-size: 24px;">Neumático (Elastómero)</h3>
-                        <p style="font-size: 20px;">Bajo el peso de la máquina y la carga (compresión), el caucho cambia su forma física aplastándose contra el suelo (deformación), pero recupera su forma original inmediatamente al girar gracias a su memoria elástica.</p>
+                        <p style="font-size: 20px;">Aplastamiento por carga estática y dinámica. Modifica su forma física drásticamente pero la recupera por su <strong>memoria elástica</strong>.</p>
                     </div>
                 </div>
             </div>
@@ -229,49 +234,49 @@
                     <thead>
                         <tr>
                             <th>Componente</th>
-                            <th>Esfuerzo Principal</th>
-                            <th>Concepto de Deformación</th>
-                            <th>Tipo de Deformación Permitida</th>
+                            <th>Tipo de Esfuerzo</th>
+                            <th>Mecánica de Carga</th>
+                            <th>Deformación Admitida</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>1. Vástago (Cilindro)</strong></td>
+                            <td><strong>Vástago</strong></td>
                             <td>Compresión / Tracción</td>
-                            <td>Fuerza axial que intenta acortar o alargar el eje longitudinal del material. Riesgo de pandeo.</td>
-                            <td><strong>Elástica Mínima.</strong> La deformación plástica (doblamiento permanente) arruina los sellos.</td>
+                            <td>Fuerza axial a lo largo del eje longitudinal.</td>
+                            <td><strong>Elástica Mínima.</strong> La flexión permanente destruye el sistema de sellos.</td>
                         </tr>
                         <tr>
-                            <td><strong>2. Balde (Labio/Cuchara)</strong></td>
+                            <td><strong>Balde (Labio)</strong></td>
                             <td>Flexión / Cizalle</td>
-                            <td>Fuerza perpendicular y de corte al levantar rocas en un extremo mientras está anclado en el otro.</td>
-                            <td><strong>Elástica.</strong> No debe superar su límite de fluencia (Yield Strength) para no descuadrarse.</td>
+                            <td>Fuerzas cortantes al levantar carga anclada en un extremo.</td>
+                            <td><strong>Elástica.</strong> Bajo el Límite de Fluencia (Yield Strength).</td>
                         </tr>
                         <tr>
-                            <td><strong>3. Neumáticos</strong></td>
+                            <td><strong>Neumáticos</strong></td>
                             <td>Compresión / Torsión</td>
-                            <td>Aplastamiento por gravedad sumado al torque de giro desde los cubos de rueda en terreno irregular.</td>
-                            <td><strong>Elástica Alta (Reversible).</strong> Diseñado específicamente para deformarse y absorber vibraciones.</td>
+                            <td>Gravedad sumada al torque de tracción.</td>
+                            <td><strong>Alta (Reversible).</strong> Diseñado para absorber y disipar vibraciones.</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- 6. FALLAS Y MEJORAS (ACTUALIZADO CON IMÁGENES) -->
+        <!-- 6. FALLAS Y MEJORAS -->
         <div class="slide">
-            <h2>4. Análisis de Fallas y Propuesta de Mejora</h2>
+            <h2>4. Análisis Crítico y Propuestas de Mejora</h2>
             <div class="grid-2">
                 <div class="panel" style="padding: 30px; display: flex; flex-direction: column; gap: 15px;">
                     <div class="media-box" style="height: 220px; min-height: 220px; border-radius: 8px;">
                         <img src="fisura_balde.jpg" alt="Fisura en Balde LHD">
                         <div class="media-label" style="font-size: 16px; bottom: 10px; left: 10px;">Evidencia: Fisura Estructural</div>
                     </div>
-                    <h3 style="color: var(--danger); margin: 0; font-size: 26px;">Falla 1: Fisuras por Abrasión (Balde)</h3>
-                    <p style="margin: 0; font-size: 20px;">Como se observa en la evidencia, la fricción constante supera la dureza del acero base, generando desgaste prematuro y adelgazamiento de la plancha, lo que deriva en fisuras por fatiga.</p>
+                    <h3 style="color: var(--danger); margin: 0; font-size: 26px;">Falla 1: Fisuras por Abrasión</h3>
+                    <p style="margin: 0; font-size: 20px;">La fricción adelgaza la plancha (desgaste abrasivo). Los impactos superan la fatiga generando propagación de grietas.</p>
                     <div style="background: rgba(252, 163, 17, 0.1); padding: 15px; border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; margin-top: auto;">
-                        <p style="margin: 0; font-size: 18px;"><strong>💡 Propuesta de Mejora (Fundamentada):</strong><br>
-                        Soldar <strong>Planchas Bimetálicas (Carburo de Cromo)</strong> en las zonas de mayor roce. El carburo de cromo tiene una dureza extrema que resiste la abrasión del cuarzo, protegiendo el acero estructural base.</p>
+                        <p style="margin: 0; font-size: 18px;"><strong>💡 Mejora Metalúrgica:</strong><br>
+                        Implementar <strong>Planchas Bimetálicas de Carburo de Cromo</strong> en zonas de roce (Alta dureza protege el acero base estructural).</p>
                     </div>
                 </div>
                 <div class="panel" style="padding: 30px; display: flex; flex-direction: column; gap: 15px;">
@@ -279,11 +284,11 @@
                         <img src="desgarro_neumatico.jpg" alt="Desgarro en Neumático LHD">
                         <div class="media-label" style="font-size: 16px; bottom: 10px; left: 10px;">Evidencia: Desgarro por Cizalle</div>
                     </div>
-                    <h3 style="color: var(--danger); margin: 0; font-size: 26px;">Falla 2: Desgarro por Cizalle (Neumático)</h3>
-                    <p style="margin: 0; font-size: 20px;">El detalle muestra cortes profundos en los tacos de goma. Al aplicar torque severo sobre rocas afiladas, se supera la resistencia a la tracción del polímero localmente, arrancando material.</p>
+                    <h3 style="color: var(--danger); margin: 0; font-size: 26px;">Falla 2: Desgarro por Cizalladura</h3>
+                    <p style="margin: 0; font-size: 20px;">El torque severo sobre rocas afiladas supera la resistencia a la tracción del elastómero, desprendiendo material.</p>
                     <div style="background: rgba(252, 163, 17, 0.1); padding: 15px; border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; margin-top: auto;">
-                        <p style="margin: 0; font-size: 18px;"><strong>💡 Propuesta de Mejora (Fundamentada):</strong><br>
-                        Cambiar a neumáticos de compuesto para <strong>"Minería Subterránea Severa" (L-5S)</strong>, los cuales poseen paredes más gruesas, o instalar cadenas de protección de acero forjado alrededor de la banda de rodadura.</p>
+                        <p style="margin: 0; font-size: 18px;"><strong>💡 Mejora Estructural:</strong><br>
+                        Transición a compuestos <strong>L-5S (Minería Severa)</strong> de paredes reforzadas, o adopción de cadenas de protección forjadas.</p>
                     </div>
                 </div>
             </div>
@@ -293,10 +298,10 @@
         <div class="slide">
             <h2>Conclusión Técnica</h2>
             <div class="panel" style="text-align: center; padding: 80px 120px; display: flex; flex-direction: column; justify-content: center; height: 100%; box-sizing: border-box;">
-                <h3 style="font-size: 45px; margin-bottom: 40px; color: #fff;">El material dicta el rendimiento</h3>
-                <p style="font-size: 28px; color: var(--primary); margin-bottom: 30px;">A través de este análisis, concluimos que en maquinaria pesada no existe un material "perfecto" para todo, sino el material adecuado para el esfuerzo específico.</p>
+                <h3 style="font-size: 45px; margin-bottom: 40px; color: #fff;">El material determina la confiabilidad</h3>
+                <p style="font-size: 28px; color: var(--primary); margin-bottom: 30px;">En maquinaria pesada, el diseño mecánico está subordinado a las propiedades de los materiales que lo componen.</p>
                 <p style="font-size: 24px; text-align: justify;">
-                El acero aleado brinda la resistencia estructural para la carga bruta, el cromo asegura la funcionalidad de precisión hidráulica y los elastómeros absorben la energía dinámica. Comprender las propiedades mecánicas (límite elástico, tenacidad, dureza) nos permite como futuros técnicos diagnosticar la causa raíz de una falla estructural y prescribir aleaciones superiores que eviten tiempos muertos en la mina.
+                El acero otorga soporte bruto, el cromo precisión hidráulica y los elastómeros disipación dinámica. Entender sus límites de fluencia, tenacidad y resiliencia nos permite, como técnicos, evitar fallas catastróficas mediante una selección de repuestos justificada y mantenimientos alineados al comportamiento físico real del equipo.
                 </p>
             </div>
         </div>
