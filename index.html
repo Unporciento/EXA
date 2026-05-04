@@ -62,23 +62,25 @@
         ul.tech-list { padding-left: 25px; }
         ul.tech-list li { margin-bottom: 20px; }
 
+        /* EL MOTOR REPARADO: Flexbox dinámico */
         .panel {
             background: var(--surface);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 12px; padding: 40px;
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
             position: relative; overflow: hidden;
+            display: flex; flex-direction: column; /* Hace que el panel ordene su interior */
         }
         .panel::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
             background: var(--primary);
         }
 
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; height: 100%; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; height: 100%; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; flex: 1; min-height: 0; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; flex: 1; min-height: 0; }
 
         .media-box {
-            width: 100%; height: 100%; border-radius: 12px; overflow: hidden;
+            width: 100%; border-radius: 12px; overflow: hidden;
             position: relative; border: 1px solid rgba(255,255,255,0.15);
             background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
@@ -125,7 +127,7 @@
                 <h1>Análisis de <span>Materiales</span> en Maquinaria Pesada</h1>
                 <h3 style="font-size: 38px; color: #fff; margin-bottom: 60px;">Cargador Frontal de Bajo Perfil (LHD)</h3>
                 
-                <div class="panel" style="background: rgba(25, 28, 35, 0.6);">
+                <div class="panel" style="background: rgba(25, 28, 35, 0.6); flex: none;">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                         <div>
                             <p style="margin:0;"><strong>Asignatura:</strong> Materiales en Maquinaria Pesada</p>
@@ -152,7 +154,7 @@
         <div class="slide">
             <h2>Introducción y Contexto</h2>
             <div class="grid-2">
-                <div class="panel" style="display: flex; flex-direction: column; justify-content: center;">
+                <div class="panel" style="justify-content: center;">
                     <h3>El Desafío Estructural</h3>
                     <ul class="tech-list">
                         <li><strong>Entorno Operativo:</strong> Operación en minería subterránea bajo abrasión extrema e impactos contra roca fragmentada.</li>
@@ -167,12 +169,12 @@
             </div>
         </div>
 
-        <!-- 3. IDENTIFICACIÓN DE MATERIALES -->
+        <!-- 3. IDENTIFICACIÓN DE MATERIALES (CORREGIDO PARA EVITAR QUE SE DESBORDE) -->
         <div class="slide">
             <h2>1. Propiedades Mecánicas por Componente</h2>
             <div class="grid-3">
                 <div class="panel" style="padding: 25px;">
-                    <div class="media-box" style="height: 250px; margin-bottom: 20px;">
+                    <div class="media-box" style="height: 250px; flex: none; margin-bottom: 20px;">
                         <video autoplay loop muted src="2.mp4"></video>
                         <div class="media-label">1. Balde / Cuchara</div>
                     </div>
@@ -181,7 +183,7 @@
                     <p><strong>Propiedades:</strong> Alta dureza superficial contra el rayado y núcleo tenaz para absorber impactos sin fractura frágil.</p>
                 </div>
                 <div class="panel" style="padding: 25px;">
-                    <div class="media-box" style="height: 250px; margin-bottom: 20px;">
+                    <div class="media-box" style="height: 250px; flex: none; margin-bottom: 20px;">
                         <video autoplay loop muted src="1.mp4"></video>
                         <div class="media-label">2. Vástago de Cilindro</div>
                     </div>
@@ -190,7 +192,7 @@
                     <p><strong>Propiedades:</strong> Alto límite de fluencia y superficie de extrema dureza y baja fricción (cromo duro).</p>
                 </div>
                 <div class="panel" style="padding: 25px;">
-                    <div class="media-box" style="height: 250px; margin-bottom: 20px;">
+                    <div class="media-box" style="height: 250px; flex: none; margin-bottom: 20px;">
                         <video autoplay loop muted src="3.mp4"></video>
                         <div class="media-label">3. Neumáticos LHD</div>
                     </div>
@@ -209,7 +211,7 @@
                     <video autoplay loop muted src="4.mp4"></video>
                     <div class="media-label">Impacto y Abrasión Dinámica</div>
                 </div>
-                <div class="panel" style="display: flex; flex-direction: column; gap: 20px; padding: 30px;">
+                <div class="panel" style="gap: 20px; padding: 30px; justify-content: center;">
                     <div>
                         <h3 style="font-size: 24px;">Balde (Acero de Alta Resistencia)</h3>
                         <p style="font-size: 20px;">Comportamiento <strong>elástico</strong> ante la penetración. Sufre desgaste abrasivo microscópico constante por fricción de la roca.</p>
@@ -263,20 +265,21 @@
             </div>
         </div>
 
-      <!-- 6. FALLAS Y MEJORAS -->
+        <!-- 6. FALLAS Y MEJORAS (BLINDADO CON FLEX: 1) -->
         <div class="slide">
             <h2>4. Análisis Crítico y Propuestas de Mejora</h2>
             <div class="grid-2">
                 
                 <!-- Panel Falla 1 -->
-                <div class="panel" style="padding: 30px; display: flex; flex-direction: column; justify-content: space-between;">
-                    <div class="media-box" style="height: 400px; border-radius: 8px; margin-bottom: 20px;">
+                <div class="panel" style="padding: 30px; gap: 15px;">
+                    <!-- LA MAGIA ESTÁ AQUÍ: flex: 1 min-height: 0 hace que calcule su espacio solo -->
+                    <div class="media-box" style="flex: 1; min-height: 0; border-radius: 8px;">
                         <img src="fisura_balde.jpg" alt="Fisura en Balde LHD">
                         <div class="media-label" style="font-size: 16px; bottom: 10px; left: 10px;">Evidencia: Fisura Estructural</div>
                     </div>
                     <div>
                         <h3 style="color: var(--danger); margin: 0 0 10px 0; font-size: 26px;">Falla 1: Fisuras por Abrasión</h3>
-                        <p style="margin: 0 0 15px 0; font-size: 20px;">La fricción adelgaza la plancha (desgaste abrasivo). Los impactos superan la fatiga generando propagación de grietas.</p>
+                        <p style="margin: 0; font-size: 20px;">La fricción adelgaza la plancha (desgaste abrasivo). Los impactos superan la fatiga generando propagación de grietas.</p>
                     </div>
                     <div style="background: rgba(252, 163, 17, 0.1); padding: 15px; border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0;">
                         <p style="margin: 0; font-size: 18px;"><strong>💡 Mejora Metalúrgica:</strong><br>
@@ -285,14 +288,15 @@
                 </div>
 
                 <!-- Panel Falla 2 -->
-                <div class="panel" style="padding: 30px; display: flex; flex-direction: column; justify-content: space-between;">
-                    <div class="media-box" style="height: 400px; border-radius: 8px; margin-bottom: 20px;">
+                <div class="panel" style="padding: 30px; gap: 15px;">
+                    <!-- LA MAGIA ESTÁ AQUÍ: flex: 1 min-height: 0 -->
+                    <div class="media-box" style="flex: 1; min-height: 0; border-radius: 8px;">
                         <img src="desgarro_neumatico.jpg" alt="Desgarro en Neumático LHD">
                         <div class="media-label" style="font-size: 16px; bottom: 10px; left: 10px;">Evidencia: Desgarro por Cizalle</div>
                     </div>
                     <div>
                         <h3 style="color: var(--danger); margin: 0 0 10px 0; font-size: 26px;">Falla 2: Desgarro por Cizalladura</h3>
-                        <p style="margin: 0 0 15px 0; font-size: 20px;">El torque severo sobre rocas afiladas supera la resistencia a la tracción del elastómero, desprendiendo material.</p>
+                        <p style="margin: 0; font-size: 20px;">El torque severo sobre rocas afiladas supera la resistencia a la tracción del elastómero, desprendiendo material.</p>
                     </div>
                     <div style="background: rgba(252, 163, 17, 0.1); padding: 15px; border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0;">
                         <p style="margin: 0; font-size: 18px;"><strong>💡 Mejora Estructural:</strong><br>
@@ -303,31 +307,14 @@
             </div>
         </div>
 
-                <!-- Panel Falla 2 -->
-                <div class="panel" style="padding: 30px; display: flex; flex-direction: column; gap: 15px;">
-                    <!-- Caja de imagen expandida (flex-grow: 1) -->
-                    <div class="media-box" style="flex-grow: 1; min-height: 350px; border-radius: 8px;">
-                        <img src="desgarro_neumatico.jpg" alt="Desgarro en Neumático LHD">
-                        <div class="media-label" style="font-size: 16px; bottom: 10px; left: 10px;">Evidencia: Desgarro por Cizalle</div>
-                    </div>
-                    <h3 style="color: var(--danger); margin: 0; font-size: 26px;">Falla 2: Desgarro por Cizalladura</h3>
-                    <p style="margin: 0; font-size: 20px;">El torque severo sobre rocas afiladas supera la resistencia a la tracción del elastómero, desprendiendo material.</p>
-                    <div style="background: rgba(252, 163, 17, 0.1); padding: 15px; border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; margin-top: auto;">
-                        <p style="margin: 0; font-size: 18px;"><strong>💡 Mejora Estructural:</strong><br>
-                        Transición a compuestos <strong>L-5S (Minería Severa)</strong> de paredes reforzadas, o adopción de cadenas de protección forjadas.</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
         <!-- 7. CONCLUSIÓN -->
         <div class="slide">
             <h2>Conclusión Técnica</h2>
-            <div class="panel" style="text-align: center; padding: 80px 120px; display: flex; flex-direction: column; justify-content: center; height: 100%; box-sizing: border-box;">
+            <div class="panel" style="text-align: center; padding: 80px 120px; justify-content: center; flex: 1;">
                 <h3 style="font-size: 45px; margin-bottom: 40px; color: #fff;">El material determina la confiabilidad</h3>
                 <p style="font-size: 28px; color: var(--primary); margin-bottom: 30px;">En maquinaria pesada, el diseño mecánico está subordinado a las propiedades de los materiales que lo componen.</p>
                 <p style="font-size: 24px; text-align: justify;">
-                El acero otorga soporte bruto, el cromo precisión hidráulica y los elastómeros disipación dinámica. Entender sus límites de fluencia, tenacidad y resiliencia nos permite, como técnicos, evitar fallas catastróficas mediante una selección de repuestos justificada y mantenimientos alineados al comportamiento físico real del equipo.
+                El acero otorga soporte bruto, el cromo precisión hidráulica y los elastómeros disipación dinámica. Entender sus límites de fluencia, tenacidad y resiliencia nos permite evitar fallas catastróficas mediante una selección de repuestos justificada y mantenimientos alineados al comportamiento físico del equipo.
                 </p>
             </div>
         </div>
